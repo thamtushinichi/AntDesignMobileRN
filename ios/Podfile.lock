@@ -2133,7 +2133,7 @@ SPEC CHECKSUMS:
   React-timing: 8c58486869a85e0ad592750d3545d971d6896d3f
   React-utils: f0682aad6bd72b8402527bfc58a9965e30e396d8
   ReactAppDependencyProvider: 642d266e12ef5ea8cb22ca9576df1f4e036258a2
-  ReactCodegen: ae4336b9d700e1922f63a93ddd6e595d6619496e
+  ReactCodegen: 3517a6a314b4d5880856acf403adc4885d609f9f
   ReactCommon: aa48e4fddbc6a0afa19dca39a1b6016c150b5db4
   RNCAsyncStorage: 39c42c1e478e1f5166d1db52b5055e090e85ad66
   RNScreens: 5621e3ad5a329fbd16de683344ac5af4192b40d3

@@ -81,6 +81,19 @@ pnpm install
 cd ios && bundle exec pod install && cd ..
 ```
 
+### Remember
+```
+Link icon fonts
+Add assets to your react-native.config.js ( If not exist, please create in project’s root directory )
+
+module.exports = {
+assets: ['node_modules/@ant-design/icons-react-native/fonts'],
+};
+Run the react-native-asset's command and linking + unlinking is automatic
+
+npx react-native-asset
+```
+
 ### Running the App
 
 Start the Metro development server:

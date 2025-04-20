@@ -1,9 +1,9 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/AntDesign';
 import HomeScreen from '../screens/home/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import {useTheme} from '../store/context/ThemeContext';
+import {Icon} from '@ant-design/react-native';
 
 export type MainTabParamList = {
   Home: undefined;

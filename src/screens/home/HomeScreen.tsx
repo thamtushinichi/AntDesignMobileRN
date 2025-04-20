@@ -24,7 +24,9 @@ const HomeScreen: React.FC = () => {
 
   // Sample data for grid
   const data = Array.from(new Array(8)).map((_val, i) => ({
-    icon: <Icon name={['check-circle', 'check', 'check-circle-o', 'cross', 'cross-circle', 'cross-circle-o', 'up', 'down'][i % 8]} size="md" />,
+    icon: <Icon
+      name={['home', 'user', 'bell', 'audit', 'contacts', 'container', 'up', 'down'][i % 8]}
+      size="md"/>,
     text: `Option ${i + 1}`,
   }));
 
@@ -54,13 +56,13 @@ const HomeScreen: React.FC = () => {
         backgroundColor={colors.background}
       />
       <ScrollView style={styles.scrollView}>
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
         <WingBlank size="lg">
           <Text style={[styles.welcomeText, {color: colors.text}]}>
             Welcome, {user?.username || 'User'}!
           </Text>
         </WingBlank>
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
 
         {/* Carousel */}
         <Carousel
@@ -79,12 +81,12 @@ const HomeScreen: React.FC = () => {
           ))}
         </Carousel>
 
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
 
         {/* Grid Options */}
         <WingBlank size="lg">
           <Card>
-            <Card.Header title="Quick Actions" />
+            <Card.Header title="Quick Actions"/>
             <Card.Body>
               <Grid
                 data={data}
@@ -103,12 +105,12 @@ const HomeScreen: React.FC = () => {
           </Card>
         </WingBlank>
 
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
 
         {/* Recent Activity */}
         <WingBlank size="lg">
           <Card>
-            <Card.Header title="Recent Activity" />
+            <Card.Header title="Recent Activity"/>
             <Card.Body>
               <View style={styles.activityItem}>
                 <Text style={{color: colors.text}}>You logged in successfully</Text>
@@ -122,7 +124,7 @@ const HomeScreen: React.FC = () => {
           </Card>
         </WingBlank>
 
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
       </ScrollView>
     </SafeAreaView>
   );
