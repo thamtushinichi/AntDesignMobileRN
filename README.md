@@ -95,3 +95,78 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+```
+AntDesignMobileRN/
+├── android/                # Cấu hình và mã nguồn Android
+├── ios/                    # Cấu hình và mã nguồn iOS
+├── node_modules/           # Dependencies
+├── src/                    # Source code chính
+│   ├── assets/             # Tài nguyên tĩnh
+│   │   ├── fonts/          # Custom fonts
+│   │   ├── images/         # Hình ảnh
+│   │   └── icons/          # Icons
+│   ├── components/         # Components tái sử dụng
+│   │   ├── common/         # Components phổ biến
+│   │   │   ├── Button.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── Divider.tsx
+│   │   │   └── index.ts
+│   │   ├── forms/          # Components liên quan đến form
+│   │   │   ├── FormField.tsx
+│   │   │   ├── FormPicker.tsx
+│   │   │   └── index.ts
+│   │   └── layout/         # Components layout
+│   │       ├── Container.tsx
+│   │       ├── Header.tsx
+│   │       └── index.ts
+│   ├── config/             # Cấu hình ứng dụng
+│   │   ├── api.ts          # API endpoints
+│   │   └── theme.ts        # Theme configuration
+│   ├── hooks/              # Custom React hooks
+│   │   ├── useForm.ts
+│   │   └── useTheme.ts
+│   ├── navigation/         # Cấu hình và setup điều hướng
+│   │   ├── AppNavigator.tsx
+│   │   ├── AuthNavigator.tsx
+│   │   └── navigationRef.ts
+│   ├── screens/            # Các màn hình
+│   │   ├── auth/           # Màn hình xác thực
+│   │   │   ├── LoginScreen.tsx
+│   │   │   └── RegisterScreen.tsx
+│   │   ├── home/           # Màn hình chính
+│   │   │   └── HomeScreen.tsx
+│   │   └── profile/        # Màn hình profile
+│   │       └── ProfileScreen.tsx
+│   ├── services/           # API và services
+│   │   ├── api.ts          # API client
+│   │   └── authService.ts  # Authentication service
+│   ├── store/              # State management
+│   │   ├── context/        # Context API
+│   │   │   ├── AuthContext.tsx
+│   │   │   └── ThemeContext.tsx
+│   │   └── reducers/       # Reducers nếu dùng Redux
+│   ├── theme/              # Styling
+│   │   ├── colors.ts       # Color definitions
+│   │   ├── fonts.ts        # Font definitions
+│   │   ├── metrics.ts      # Kích thước, padding, margins
+│   │   └── index.ts        # Export tất cả theme
+│   ├── types/              # TypeScript definitions
+│   │   ├── navigation.ts   # Navigation types
+│   │   └── api.ts          # API response types
+│   ├── utils/              # Utility functions
+│   │   ├── storage.ts      # Local storage helpers
+│   │   ├── validation.ts   # Form validation helpers
+│   │   └── formatters.ts   # Formatting helpers
+│   └── App.tsx             # Component chính App
+├── .eslintrc.js            # ESLint configuration
+├── .gitignore              # Git ignore file
+├── .prettierrc.js          # Prettier configuration
+├── app.json                # App configuration
+├── babel.config.js         # Babel configuration
+├── index.js                # Entry point
+├── metro.config.js         # Metro bundler config
+├── package.json            # Package dependencies
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # Documentation
+```
