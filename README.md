@@ -1,172 +1,126 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Ant Design Mobile RN Project
 
-# Getting Started
+This is a React Native project using Ant Design Mobile RN, with TypeScript support. The project follows a structured architecture to ensure scalability and maintainability.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
-
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## Project Structure
 
 ```
 AntDesignMobileRN/
-├── android/                # Cấu hình và mã nguồn Android
-├── ios/                    # Cấu hình và mã nguồn iOS
+├── android/                # Android configuration and source code
+├── ios/                    # iOS configuration and source code
 ├── node_modules/           # Dependencies
-├── src/                    # Source code chính
-│   ├── assets/             # Tài nguyên tĩnh
+├── src/                    # Main source code
+│   ├── assets/             # Static resources
 │   │   ├── fonts/          # Custom fonts
-│   │   ├── images/         # Hình ảnh
+│   │   ├── images/         # Images
 │   │   └── icons/          # Icons
-│   ├── components/         # Components tái sử dụng
-│   │   ├── common/         # Components phổ biến
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── Divider.tsx
-│   │   │   └── index.ts
-│   │   ├── forms/          # Components liên quan đến form
-│   │   │   ├── FormField.tsx
-│   │   │   ├── FormPicker.tsx
-│   │   │   └── index.ts
-│   │   └── layout/         # Components layout
-│   │       ├── Container.tsx
-│   │       ├── Header.tsx
-│   │       └── index.ts
-│   ├── config/             # Cấu hình ứng dụng
-│   │   ├── api.ts          # API endpoints
-│   │   └── theme.ts        # Theme configuration
+│   ├── components/         # Reusable components
+│   │   ├── common/         # Common components
+│   │   ├── forms/          # Form-related components
+│   │   └── layout/         # Layout components
+│   ├── config/             # App configuration
 │   ├── hooks/              # Custom React hooks
-│   │   ├── useForm.ts
-│   │   └── useTheme.ts
-│   ├── navigation/         # Cấu hình và setup điều hướng
-│   │   ├── AppNavigator.tsx
-│   │   ├── AuthNavigator.tsx
-│   │   └── navigationRef.ts
-│   ├── screens/            # Các màn hình
-│   │   ├── auth/           # Màn hình xác thực
-│   │   │   ├── LoginScreen.tsx
-│   │   │   └── RegisterScreen.tsx
-│   │   ├── home/           # Màn hình chính
-│   │   │   └── HomeScreen.tsx
-│   │   └── profile/        # Màn hình profile
-│   │       └── ProfileScreen.tsx
-│   ├── services/           # API và services
-│   │   ├── api.ts          # API client
-│   │   └── authService.ts  # Authentication service
+│   ├── navigation/         # Navigation setup
+│   ├── screens/            # App screens
+│   │   ├── auth/           # Authentication screens
+│   │   ├── home/           # Home screens
+│   │   └── profile/        # Profile screens
+│   ├── services/           # API and services
 │   ├── store/              # State management
-│   │   ├── context/        # Context API
-│   │   │   ├── AuthContext.tsx
-│   │   │   └── ThemeContext.tsx
-│   │   └── reducers/       # Reducers nếu dùng Redux
+│   │   ├── context/        # React Context API
+│   │   └── reducers/       # Reducers if using Redux
 │   ├── theme/              # Styling
-│   │   ├── colors.ts       # Color definitions
-│   │   ├── fonts.ts        # Font definitions
-│   │   ├── metrics.ts      # Kích thước, padding, margins
-│   │   └── index.ts        # Export tất cả theme
-│   ├── types/              # TypeScript definitions
-│   │   ├── navigation.ts   # Navigation types
-│   │   └── api.ts          # API response types
-│   ├── utils/              # Utility functions
-│   │   ├── storage.ts      # Local storage helpers
-│   │   ├── validation.ts   # Form validation helpers
-│   │   └── formatters.ts   # Formatting helpers
-│   └── App.tsx             # Component chính App
-├── .eslintrc.js            # ESLint configuration
-├── .gitignore              # Git ignore file
-├── .prettierrc.js          # Prettier configuration
-├── app.json                # App configuration
-├── babel.config.js         # Babel configuration
+│   ├── types/              # TypeScript type definitions
+│   └── utils/              # Utility functions
+├── App.tsx                 # Main App component
 ├── index.js                # Entry point
-├── metro.config.js         # Metro bundler config
-├── package.json            # Package dependencies
-├── tsconfig.json           # TypeScript configuration
-└── README.md               # Documentation
+└── ...                     # Config files
 ```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 18
+- pnpm >= 8.0
+- JDK 11 or newer (for Android)
+- Android Studio (for Android development)
+- Xcode (for iOS development)
+- CocoaPods (for iOS dependencies)
+
+### Initial Setup
+
+1. Clone the repository
+2. Run the setup script to create the directory structure and install dependencies:
+
+```sh
+chmod +x setup.sh
+./setup.sh
+```
+
+Alternatively, you can set up manually:
+
+```sh
+# Create the directory structure
+mkdir -p src/assets/{fonts,images,icons}
+mkdir -p src/components/{common,forms,layout}
+mkdir -p src/config
+mkdir -p src/hooks
+mkdir -p src/navigation
+mkdir -p src/screens/{auth,home,profile}
+mkdir -p src/services
+mkdir -p src/store/{context,reducers}
+mkdir -p src/theme
+mkdir -p src/types
+mkdir -p src/utils
+
+# Install dependencies
+pnpm install
+
+# For iOS, install CocoaPods dependencies
+cd ios && bundle exec pod install && cd ..
+```
+
+### Running the App
+
+Start the Metro development server:
+
+```sh
+pnpm start
+```
+
+Run on Android:
+
+```sh
+pnpm android
+```
+
+Run on iOS:
+
+```sh
+pnpm ios
+```
+
+## Key Features
+
+- 🎨 **Ant Design Mobile RN** components
+- 📱 **Responsive design** with dark/light theme support
+- 🔒 **Authentication flow** with context API
+- 📋 **Form validation** with custom hooks
+- 🧭 **Navigation** with React Navigation v7
+- 🎯 **TypeScript** for type safety
+- 🛠️ **Modular architecture** for scalability
+
+## Dependencies
+
+- React Native 0.79.1
+- Ant Design Mobile RN 5.4.0
+- React Navigation 7
+- AsyncStorage 2.1.2
+- Vector Icons 10.2.0
+
+## Notes
+
+- This project uses pnpm as the package manager. If you prefer using npm or yarn, you need to remove the pnpm-lock.yaml file and run `npm install` or `yarn install`.
+- The setup.sh script helps you create the necessary directory structure and install dependencies.
+- For iOS development, remember to run `cd ios && bundle exec pod install` after adding new native dependencies.
