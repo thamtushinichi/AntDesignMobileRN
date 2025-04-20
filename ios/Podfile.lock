@@ -1332,6 +1332,8 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
+  - react-native-netinfo (11.4.1):
+    - React-Core
   - react-native-safe-area-context (5.4.0):
     - DoubleConversion
     - glog
@@ -1872,6 +1874,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
@@ -1991,6 +1994,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-NativeModulesApple:
@@ -2103,6 +2108,7 @@ SPEC CHECKSUMS:
   React-logger: cc55ca6e50aeb31216c0a9dec30871cac776ef9a
   React-Mapbuffer: 8df5296f9d9a61f980d293b55026cfebcd8dfb0a
   React-microtasksnativemodule: c8ed30f8ec30affbc73411c54207bd67b1125bbb
+  react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-safe-area-context: 562163222d999b79a51577eda2ea8ad2c32b4d06
   React-NativeModulesApple: 8a465be9a58afc56f48c1322331ffbdecd3d4877
   React-oscompat: 74eb4badd12e93899f37a5dbb03d8a638011a292

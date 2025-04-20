@@ -1,40 +1,57 @@
-# Ant Design Mobile RN Project
+# Enhanced Ant Design Mobile RN Boilerplate
 
-This is a React Native project using Ant Design Mobile RN, with TypeScript support. The project follows a structured architecture to ensure scalability and maintainability.
+A modern, type-safe React Native boilerplate with Ant Design Mobile RN components, comprehensive form handling, theming system, and utility hooks.
+
+## Features
+
+- ✅ **React Native 0.79+** - Latest React Native version with improved architecture
+- 🎨 **Ant Design Mobile RN** - Beautiful UI components based on Ant Design
+- 📝 **TypeScript** - Type safety and improved developer experience
+- 🔄 **Context API** - For global state management
+- 🎯 **React Navigation 7** - Fully typed navigation with latest API
+- 🧩 **Modular architecture** - Organized folder structure for scalability
+- 🌓 **Light & Dark themes** - Complete theming system with design tokens
+- 📋 **Advanced forms** - Form validation, error handling, and keyboard management
+- 🔌 **API utilities** - Hooks for handling API requests with loading and error states
+- 🚀 **Ready-to-use hooks** - Custom hooks for form validation, keyboard, and more
+- 🛡️ **Safe storage** - AsyncStorage utilities for secure data persistence
+- 📱 **Responsive design** - Adapts to different screen sizes
+- 🧪 **Testing setup** - Jest configuration ready for unit testing
 
 ## Project Structure
 
 ```
-AntDesignMobileRN/
-├── android/                # Android configuration and source code
-├── ios/                    # iOS configuration and source code
-├── node_modules/           # Dependencies
-├── src/                    # Main source code
-│   ├── assets/             # Static resources
-│   │   ├── fonts/          # Custom fonts
-│   │   ├── images/         # Images
-│   │   └── icons/          # Icons
-│   ├── components/         # Reusable components
-│   │   ├── common/         # Common components
-│   │   ├── forms/          # Form-related components
-│   │   └── layout/         # Layout components
-│   ├── config/             # App configuration
-│   ├── hooks/              # Custom React hooks
-│   ├── navigation/         # Navigation setup
-│   ├── screens/            # App screens
-│   │   ├── auth/           # Authentication screens
-│   │   ├── home/           # Home screens
-│   │   └── profile/        # Profile screens
-│   ├── services/           # API and services
-│   ├── store/              # State management
-│   │   ├── context/        # React Context API
-│   │   └── reducers/       # Reducers if using Redux
-│   ├── theme/              # Styling
-│   ├── types/              # TypeScript type definitions
-│   └── utils/              # Utility functions
-├── App.tsx                 # Main App component
-├── index.js                # Entry point
-└── ...                     # Config files
+src/
+├── assets/                # Static resources (images, fonts, icons)
+├── components/            # Reusable UI components
+│   ├── common/            # Common UI components (buttons, cards, etc.)
+│   ├── forms/             # Form-specific components
+│   └── layout/            # Layout components
+├── config/                # Application configuration
+├── hooks/                 # Custom React hooks
+│   ├── useApi.ts          # API request handling with loading/error states
+│   ├── useForm.ts         # Form state management
+│   ├── useKeyboard.ts     # Keyboard visibility and height
+│   └── useValidation.ts   # Form validation logic
+├── navigation/            # Navigation configuration
+├── screens/               # App screens organized by feature
+├── services/              # API clients and services
+│   ├── api.ts             # Core API client
+│   ├── authService.ts     # Authentication service
+│   └── toastService.ts    # Toast notification service
+├── store/                 # Global state management
+│   └── context/           # React Context providers
+├── theme/                 # Theming system
+│   ├── colors.ts          # Color palette
+│   ├── tokens.ts          # Design tokens (spacing, typography, etc.)
+│   └── index.ts           # Theme exports
+├── types/                 # TypeScript type definitions
+└── utils/                 # Utility functions
+    ├── dateUtils.ts       # Date formatting and manipulation
+    ├── keyboardUtils.ts   # Keyboard interaction utilities
+    ├── networkUtils.ts    # Network connectivity utilities
+    ├── storage.ts         # AsyncStorage wrapper
+    └── validation.ts      # Validation utilities
 ```
 
 ## Getting Started
@@ -42,98 +59,193 @@ AntDesignMobileRN/
 ### Prerequisites
 
 - Node.js >= 18
-- pnpm >= 8.0
-- JDK 11 or newer (for Android)
+- pnpm >= 8.15.1
+- CocoaPods (for iOS development)
+- Xcode 14+ (for iOS development)
 - Android Studio (for Android development)
-- Xcode (for iOS development)
-- CocoaPods (for iOS dependencies)
+- JDK 17 (for Android development)
 
-### Initial Setup
+### Installation
 
-1. Clone the repository
-2. Run the setup script to create the directory structure and install dependencies:
+1. Clone the repository:
 
-```sh
-chmod +x setup.sh
-./setup.sh
+```bash
+git clone https://your-repository-url.git
+cd project-name
 ```
 
-Alternatively, you can set up manually:
+2. Install dependencies:
 
-```sh
-# Create the directory structure
-mkdir -p src/assets/{fonts,images,icons}
-mkdir -p src/components/{common,forms,layout}
-mkdir -p src/config
-mkdir -p src/hooks
-mkdir -p src/navigation
-mkdir -p src/screens/{auth,home,profile}
-mkdir -p src/services
-mkdir -p src/store/{context,reducers}
-mkdir -p src/theme
-mkdir -p src/types
-mkdir -p src/utils
-
-# Install dependencies
+```bash
 pnpm install
-
-# For iOS, install CocoaPods dependencies
-cd ios && bundle exec pod install && cd ..
 ```
 
-### Remember
-```
-Link icon fonts
-Add assets to your react-native.config.js ( If not exist, please create in project’s root directory )
+3. Install iOS dependencies:
 
-module.exports = {
-assets: ['node_modules/@ant-design/icons-react-native/fonts'],
-};
-Run the react-native-asset's command and linking + unlinking is automatic
-
-npx react-native-asset
+```bash
+cd ios && bundle install && bundle exec pod install && cd ..
 ```
 
 ### Running the App
 
-Start the Metro development server:
+#### Start Metro:
 
-```sh
+```bash
 pnpm start
 ```
 
-Run on Android:
+#### Run on iOS:
 
-```sh
-pnpm android
-```
-
-Run on iOS:
-
-```sh
+```bash
 pnpm ios
 ```
 
-## Key Features
+#### Run on Android:
 
-- 🎨 **Ant Design Mobile RN** components
-- 📱 **Responsive design** with dark/light theme support
-- 🔒 **Authentication flow** with context API
-- 📋 **Form validation** with custom hooks
-- 🧭 **Navigation** with React Navigation v7
-- 🎯 **TypeScript** for type safety
-- 🛠️ **Modular architecture** for scalability
+```bash
+pnpm android
+```
 
-## Dependencies
+### Clean Installation
 
-- React Native 0.79.1
-- Ant Design Mobile RN 5.4.0
-- React Navigation 7
-- AsyncStorage 2.1.2
-- Vector Icons 10.2.0
+If you encounter any issues, you can try a clean installation:
 
-## Notes
+```bash
+pnpm clean:install
+```
 
-- This project uses pnpm as the package manager. If you prefer using npm or yarn, you need to remove the pnpm-lock.yaml file and run `npm install` or `yarn install`.
-- The setup.sh script helps you create the necessary directory structure and install dependencies.
-- For iOS development, remember to run `cd ios && bundle exec pod install` after adding new native dependencies.
+## Form System
+
+The boilerplate includes a powerful form system built on top of custom hooks:
+
+### Form Component
+
+```tsx
+<Form
+  initialValues={{ email: '', password: '' }}
+  onSubmit={handleSubmit}
+  validate={validateForm}
+>
+  {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+    <>
+      <FormField
+        name="email"
+        label="Email"
+        value={values.email}
+        onChange={(value) => handleChange('email', value)}
+        onBlur={() => handleBlur('email')}
+        error={errors.email}
+        touched={touched.email}
+        required
+      />
+      
+      <Button 
+        title="Submit" 
+        onPress={handleSubmit} 
+        fullWidth 
+      />
+    </>
+  )}
+</Form>
+```
+
+### Validation
+
+Use the `useValidation` hook with predefined validators:
+
+```tsx
+const validateForm = useValidation({
+  email: [
+    validators.required('Email is required'),
+    validators.email('Please enter a valid email')
+  ],
+  password: [
+    validators.required('Password is required'),
+    validators.minLength(8, 'Password must be at least 8 characters')
+  ]
+});
+```
+
+## Theming System
+
+The theming system uses design tokens for consistent styling:
+
+```tsx
+// Access theme in components
+const { theme } = useTheme();
+const { colors, spacing, typography } = theme;
+
+// Use theme properties in styles
+const styles = StyleSheet.create({
+  container: {
+    padding: spacing.m,
+    backgroundColor: colors.background,
+  },
+  title: {
+    fontSize: typography.fontSizes.xl,
+    fontWeight: typography.fontWeights.bold,
+    color: colors.text,
+  },
+});
+```
+
+## API Utilities
+
+Make API requests with the `useApi` hook:
+
+```tsx
+const userApi = useApi(userService.getUser, {
+  showSuccessToast: true,
+  successMessage: 'User loaded successfully',
+});
+
+// In your component
+const loadUser = async (userId) => {
+  const user = await userApi.execute(userId);
+  if (user) {
+    // Handle success
+  }
+};
+
+// Access loading and error states
+if (userApi.loading) return <Loading />;
+if (userApi.error) return <Error message={userApi.error.message} />;
+```
+
+## Toast Notifications
+
+Display toast notifications with the toast service:
+
+```tsx
+import toastService from '../services/toastService';
+
+// Show different types of toasts
+toastService.success('Operation completed successfully');
+toastService.error('An error occurred');
+toastService.warning('Please check your input');
+toastService.info('Information message');
+
+// Show toast with custom duration
+toastService.success('Custom duration', 5); // 5 seconds
+```
+
+## Custom Hooks
+
+The boilerplate includes several useful custom hooks:
+
+- `useForm`: Form state management
+- `useValidation`: Form validation
+- `useApi`: API request handling
+- `useKeyboard`: Keyboard visibility and height tracking
+- `useTheme`: Access to the theme system
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- [Ant Design Mobile RN](https://rn.mobile.ant.design/)
+- [React Native](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Navigation](https://reactnavigation.org/)

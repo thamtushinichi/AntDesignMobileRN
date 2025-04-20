@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -9,197 +9,196 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {
-  InputItem,
-  Button,
-  WhiteSpace,
-  WingBlank,
-  Toast,
-} from '@ant-design/react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useAuth} from '../../store/context/AuthContext';
-import {useTheme} from '../../store/context/ThemeContext';
-import {AuthStackParamList} from '../../navigation/AuthNavigator';
-import validation from '../../utils/validation';
+import { WhiteSpace, WingBlank } from '@ant-design/react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useAuth } from '../../store/context/AuthContext';
+import { useTheme } from '../../store/context/ThemeContext';
+import { AuthStackParamList } from '../../navigation/AuthNavigator';
+import { Form, FormField } from '../../components/forms';
+import { Button } from '../../components/common';
+import useValidation, { validators } from '../../hooks/useValidation';
+import useApi from '../../hooks/useApi';
+import authService from '../../services/authService';
+import toastService from '../../services/toastService';
+import { useKeyboard } from '../../hooks/useKeyboard';
 
 type RegisterScreenProps = {
   navigation: NativeStackNavigationProp<AuthStackParamList, 'Register'>;
 };
 
-const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
-  const {register} = useAuth();
-  const {colors} = useTheme();
+// Form values type
+interface RegisterFormValues {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{
-    username?: string;
-    email?: string;
-    password?: string;
-    confirmPassword?: string;
-  }>({});
+const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
+  const { register } = useAuth();
+  const { theme } = useTheme();
+  const { colors } = theme;
+  const { keyboardVisible } = useKeyboard();
 
-  const validate = (): boolean => {
-    const newErrors: {
-      username?: string;
-      email?: string;
-      password?: string;
-      confirmPassword?: string;
-    } = {};
+  // Create register API hook
+  const registerApi = useApi(authService.register, {
+    showSuccessToast: true,
+    successMessage: 'Registration successful!',
+    showErrorToast: true,
+    errorMessage: 'Registration failed. Please try again later.',
+  });
 
-    if (validation.isEmpty(username)) {
-      newErrors.username = 'Username is required';
-    } else if (!validation.hasMinLength(username, 3)) {
-      newErrors.username = 'Username must be at least 3 characters';
-    }
+  // Create form validation schema
+  const validateRegister = useValidation<RegisterFormValues>({
+    username: [
+      validators.required('Username is required'),
+      validators.minLength(3, 'Username must be at least 3 characters'),
+      validators.maxLength(20, 'Username must be at most 20 characters'),
+    ],
+    email: [
+      validators.required('Email is required'),
+      validators.email('Please enter a valid email address'),
+    ],
+    password: [
+      validators.required('Password is required'),
+      validators.password(),
+    ],
+    confirmPassword: [
+      validators.required('Please confirm your password'),
+      validators.matches('password', 'Passwords must match'),
+    ],
+  });
 
-    if (validation.isEmpty(email)) {
-      newErrors.email = 'Email is required';
-    } else if (!validation.isValidEmail(email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
+  // Handle register form submission
+  const handleRegister = async (values: RegisterFormValues) => {
+    const result = await registerApi.execute(
+      values.username,
+      values.email,
+      values.password
+    );
 
-    if (validation.isEmpty(password)) {
-      newErrors.password = 'Password is required';
-    } else if (!validation.isValidPassword(password)) {
-      newErrors.password = 'Password must be at least 8 characters with uppercase, lowercase, and digit';
-    }
-
-    if (validation.isEmpty(confirmPassword)) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (!validation.doValuesMatch(password, confirmPassword)) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleRegister = async () => {
-    if (!validate()) {
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await register(username, email, password);
-      Toast.success('Registration successful!', 1);
-    } catch (error) {
-      console.error('Registration error:', error);
-      Toast.fail('Registration failed. Please try again later.', 2);
-    } finally {
-      setLoading(false);
+    if (result) {
+      try {
+        await register(values.username, values.email, values.password);
+      } catch (error) {
+        console.error('Register context error:', error);
+        toastService.error('An error occurred while registering.');
+      }
     }
   };
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
         <ScrollView
-          contentContainerStyle={styles.scrollContainer}
+          contentContainerStyle={[
+            styles.scrollContainer,
+            // Adjust padding when keyboard is visible
+            keyboardVisible && { paddingBottom: 20 }
+          ]}
           keyboardShouldPersistTaps="handled">
           <WingBlank size="lg">
             <View style={styles.headerContainer}>
-              <Text style={[styles.title, {color: colors.text}]}>Create Account</Text>
-              <Text style={[styles.subtitle, {color: colors.text}]}>
+              <Text style={[styles.title, { color: colors.text }]}>Create Account</Text>
+              <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
                 Sign up to get started
               </Text>
             </View>
 
             <WhiteSpace size="xl" />
 
-            <View style={styles.formContainer}>
-              <InputItem
-                clear
-                error={!!errors.username}
-                value={username}
-                onChange={setUsername}
-                labelNumber={5}
-                placeholder="Username"
-                placeholderTextColor={colors.placeholder}
-                style={{color: colors.text}}
-              />
-              {errors.username && (
-                <Text style={styles.errorText}>{errors.username}</Text>
+            <Form
+              initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
+              onSubmit={handleRegister}
+              validate={validateRegister}>
+              {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                <View style={styles.formContainer}>
+                  <FormField
+                    name="username"
+                    label="Username"
+                    value={values.username}
+                    onChange={(value) => handleChange('username', value)}
+                    onBlur={() => handleBlur('username')}
+                    placeholder="Enter your username"
+                    error={errors.username}
+                    touched={touched.username}
+                    autoCapitalize="none"
+                    required
+                  />
+
+                  <WhiteSpace size="lg" />
+
+                  <FormField
+                    name="email"
+                    label="Email"
+                    value={values.email}
+                    onChange={(value) => handleChange('email', value)}
+                    onBlur={() => handleBlur('email')}
+                    placeholder="Enter your email"
+                    error={errors.email}
+                    touched={touched.email}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    required
+                  />
+
+                  <WhiteSpace size="lg" />
+
+                  <FormField
+                    name="password"
+                    label="Password"
+                    value={values.password}
+                    onChange={(value) => handleChange('password', value)}
+                    onBlur={() => handleBlur('password')}
+                    placeholder="Enter your password"
+                    error={errors.password}
+                    touched={touched.password}
+                    secureTextEntry
+                    required
+                  />
+
+                  <WhiteSpace size="lg" />
+
+                  <FormField
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    value={values.confirmPassword}
+                    onChange={(value) => handleChange('confirmPassword', value)}
+                    onBlur={() => handleBlur('confirmPassword')}
+                    placeholder="Confirm your password"
+                    error={errors.confirmPassword}
+                    touched={touched.confirmPassword}
+                    secureTextEntry
+                    required
+                  />
+
+                  <WhiteSpace size="xl" />
+
+                  <Button
+                    title="Register"
+                    type="primary"
+                    loading={isSubmitting || registerApi.loading}
+                    disabled={isSubmitting || registerApi.loading}
+                    onPress={handleSubmit}
+                    fullWidth
+                  />
+
+                  <WhiteSpace size="lg" />
+
+                  <View style={styles.loginContainer}>
+                    <Text style={{ color: colors.textSecondary }}>Already have an account? </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                      <Text style={[styles.loginText, { color: colors.primary }]}>
+                        Login
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               )}
-
-              <WhiteSpace size="lg" />
-
-              <InputItem
-                clear
-                error={!!errors.email}
-                value={email}
-                onChange={setEmail}
-                labelNumber={5}
-                placeholder="Email"
-                placeholderTextColor={colors.placeholder}
-                style={{color: colors.text}}
-              />
-              {errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
-
-              <WhiteSpace size="lg" />
-
-              <InputItem
-                clear
-                type="password"
-                error={!!errors.password}
-                value={password}
-                onChange={setPassword}
-                labelNumber={5}
-                placeholder="Password"
-                placeholderTextColor={colors.placeholder}
-                style={{color: colors.text}}
-              />
-              {errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
-              )}
-
-              <WhiteSpace size="lg" />
-
-              <InputItem
-                clear
-                type="password"
-                error={!!errors.confirmPassword}
-                value={confirmPassword}
-                onChange={setConfirmPassword}
-                labelNumber={5}
-                placeholder="Confirm Password"
-                placeholderTextColor={colors.placeholder}
-                style={{color: colors.text}}
-              />
-              {errors.confirmPassword && (
-                <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-              )}
-
-              <WhiteSpace size="xl" />
-
-              <Button
-                type="primary"
-                loading={loading}
-                disabled={loading}
-                onPress={handleRegister}>
-                Register
-              </Button>
-
-              <WhiteSpace size="lg" />
-
-              <View style={styles.loginContainer}>
-                <Text style={{color: colors.text}}>Already have an account? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                  <Text style={[styles.loginText, {color: colors.primary}]}>
-                    Login
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            </Form>
           </WingBlank>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -233,12 +232,6 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     marginTop: 20,
-  },
-  errorText: {
-    color: '#f5222d',
-    fontSize: 12,
-    marginTop: 4,
-    marginLeft: 15,
   },
   loginContainer: {
     flexDirection: 'row',

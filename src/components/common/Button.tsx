@@ -4,21 +4,36 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  View,
   ViewStyle,
   TextStyle,
+  StyleProp,
 } from 'react-native';
-import {useTheme} from '../../store/context/ThemeContext';
+import { Icon } from '@ant-design/react-native';
+import { useTheme } from '../../store/context/ThemeContext';
+
+export type ButtonType = 'primary' | 'secondary' | 'outline' | 'text' | 'danger' | 'success' | 'warning';
+export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonShape = 'default' | 'rounded' | 'circle';
 
 interface ButtonProps {
-  title: string;
+  title?: string;
   onPress: () => void;
-  type?: 'primary' | 'secondary' | 'outline' | 'danger';
-  size?: 'small' | 'medium' | 'large';
+  type?: ButtonType;
+  size?: ButtonSize;
+  shape?: ButtonShape;
   disabled?: boolean;
   loading?: boolean;
   fullWidth?: boolean;
-  style?: ViewStyle;
-  textStyle?: TextStyle;
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  iconSize?: number;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  activeOpacity?: number;
+  testID?: string;
+  accessibilityLabel?: string;
+  children?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -26,27 +41,41 @@ const Button: React.FC<ButtonProps> = ({
                                          onPress,
                                          type = 'primary',
                                          size = 'medium',
+                                         shape = 'default',
                                          disabled = false,
                                          loading = false,
                                          fullWidth = false,
+                                         icon,
+                                         iconPosition = 'left',
+                                         iconSize,
                                          style,
                                          textStyle,
+                                         activeOpacity = 0.8,
+                                         testID,
+                                         accessibilityLabel,
+                                         children,
                                        }) => {
-  const {colors} = useTheme();
+  const { theme } = useTheme();
+  const { colors, spacing, borderRadius } = theme;
 
   // Determine button background color based on type
   const getBackgroundColor = () => {
-    if (disabled) return '#d9d9d9';
+    if (disabled) return colors.disabled;
 
     switch (type) {
       case 'primary':
         return colors.primary;
       case 'secondary':
-        return 'transparent';
+        return colors.secondary;
       case 'outline':
+      case 'text':
         return 'transparent';
       case 'danger':
         return colors.error;
+      case 'success':
+        return colors.success;
+      case 'warning':
+        return colors.warning;
       default:
         return colors.primary;
     }
@@ -54,51 +83,114 @@ const Button: React.FC<ButtonProps> = ({
 
   // Determine button text color based on type
   const getTextColor = () => {
-    if (disabled) return '#999999';
+    if (disabled) return colors.textTertiary;
 
     switch (type) {
       case 'primary':
-        return '#ffffff';
-      case 'secondary':
-        return colors.primary;
-      case 'outline':
-        return colors.primary;
       case 'danger':
-        return '#ffffff';
+      case 'success':
+      case 'warning':
+        return colors.textInverted;
+      case 'secondary':
+        return colors.textInverted;
+      case 'outline':
+        switch (type) {
+          case 'danger':
+            return colors.error;
+          case 'success':
+            return colors.success;
+          case 'warning':
+            return colors.warning;
+          default:
+            return colors.primary;
+        }
+      case 'text':
+        switch (type) {
+          case 'danger':
+            return colors.error;
+          case 'success':
+            return colors.success;
+          case 'warning':
+            return colors.warning;
+          default:
+            return colors.primary;
+        }
       default:
-        return '#ffffff';
+        return colors.textInverted;
     }
   };
 
-  // Determine button border based on type
+  // Determine button border color based on type
   const getBorderColor = () => {
-    if (disabled) return '#d9d9d9';
+    if (disabled) return colors.disabled;
 
     switch (type) {
       case 'primary':
         return colors.primary;
       case 'secondary':
-        return 'transparent';
+        return colors.secondary;
       case 'outline':
-        return colors.primary;
+        switch (type) {
+          case 'danger':
+            return colors.error;
+          case 'success':
+            return colors.success;
+          case 'warning':
+            return colors.warning;
+          default:
+            return colors.primary;
+        }
+      case 'text':
+        return 'transparent';
       case 'danger':
         return colors.error;
+      case 'success':
+        return colors.success;
+      case 'warning':
+        return colors.warning;
       default:
         return colors.primary;
     }
   };
 
-  // Determine button padding based on size
+  // Determine border radius based on shape
+  const getBorderRadius = () => {
+    switch (shape) {
+      case 'default':
+        return borderRadius.m;
+      case 'rounded':
+        return borderRadius.round;
+      case 'circle':
+        // For circle, we'll make it half the height in the layout
+        return undefined;
+      default:
+        return borderRadius.m;
+    }
+  };
+
+  // Determine padding based on size
   const getPadding = () => {
     switch (size) {
       case 'small':
-        return {paddingVertical: 6, paddingHorizontal: 12};
+        return {
+          paddingVertical: spacing.xs,
+          paddingHorizontal: spacing.m,
+        };
       case 'medium':
-        return {paddingVertical: 10, paddingHorizontal: 16};
+        return {
+          paddingVertical: spacing.s,
+          paddingHorizontal: spacing.l,
+        };
       case 'large':
-        return {paddingVertical: 14, paddingHorizontal: 20};
+        return {
+          paddingVertical: spacing.m,
+          paddingHorizontal: spacing.xl,
+        };
       default:
-        return {paddingVertical: 10, paddingHorizontal: 16};
+        return {
+          paddingVertical: spacing.s,
+          paddingHorizontal: spacing.l,
+        };
     }
   };
 
@@ -106,14 +198,97 @@ const Button: React.FC<ButtonProps> = ({
   const getTextSize = () => {
     switch (size) {
       case 'small':
-        return 12;
+        return theme.typography.fontSizes.s;
       case 'medium':
-        return 14;
+        return theme.typography.fontSizes.m;
       case 'large':
-        return 16;
+        return theme.typography.fontSizes.l;
       default:
-        return 14;
+        return theme.typography.fontSizes.m;
     }
+  };
+
+  // Determine icon size based on button size if not explicitly provided
+  const getIconSize = () => {
+    if (iconSize) return iconSize;
+
+    switch (size) {
+      case 'small':
+        return 16;
+      case 'medium':
+        return 20;
+      case 'large':
+        return 24;
+      default:
+        return 20;
+    }
+  };
+
+  // Adjust dimensions for circle shape
+  const getCircleStyles = () => {
+    if (shape !== 'circle') return {};
+
+    const dimension = size === 'small' ? 32 : size === 'medium' ? 40 : 48;
+    return {
+      width: dimension,
+      height: dimension,
+      borderRadius: dimension / 2,
+      padding: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+    };
+  };
+
+  // Render the icon
+  const renderIcon = () => {
+    if (!icon && !loading) return null;
+
+    if (loading) {
+      return <ActivityIndicator size="small" color={getTextColor()} style={styles.iconLeft} />;
+    }
+
+    return (
+      <Icon
+        name={icon}
+        size={getIconSize()}
+        color={getTextColor()}
+        style={iconPosition === 'left' ? styles.iconLeft : styles.iconRight}
+      />
+    );
+  };
+
+  // Determine what to render as content
+  const renderContent = () => {
+    if (loading && !title && !children) {
+      return <ActivityIndicator size="small" color={getTextColor()} />;
+    }
+
+    if (children) {
+      return children;
+    }
+
+    if (!title && icon) {
+      return renderIcon();
+    }
+
+    return (
+      <>
+        {icon && iconPosition === 'left' && renderIcon()}
+        <Text
+          style={[
+            styles.text,
+            {
+              color: getTextColor(),
+              fontSize: getTextSize(),
+              fontWeight: theme.typography.fontWeights.semiBold,
+            },
+            textStyle,
+          ]}>
+          {title}
+        </Text>
+        {icon && iconPosition === 'right' && renderIcon()}
+      </>
+    );
   };
 
   return (
@@ -124,43 +299,42 @@ const Button: React.FC<ButtonProps> = ({
           backgroundColor: getBackgroundColor(),
           borderColor: getBorderColor(),
           borderWidth: type === 'outline' ? 1 : 0,
+          borderRadius: getBorderRadius(),
           width: fullWidth ? '100%' : 'auto',
           ...getPadding(),
         },
+        getCircleStyles(),
         style,
       ]}
       onPress={onPress}
       disabled={disabled || loading}
-      activeOpacity={0.8}>
-      {loading ? (
-        <ActivityIndicator size="small" color={getTextColor()} />
-      ) : (
-        <Text
-          style={[
-            styles.text,
-            {
-              color: getTextColor(),
-              fontSize: getTextSize(),
-            },
-            textStyle,
-          ]}>
-          {title}
-        </Text>
-      )}
+      activeOpacity={activeOpacity}
+      testID={testID}
+      accessibilityLabel={accessibilityLabel || title}>
+      <View style={styles.contentContainer}>{renderContent()}</View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  contentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   text: {
-    fontWeight: '600',
     textAlign: 'center',
+  },
+  iconLeft: {
+    marginRight: 8,
+  },
+  iconRight: {
+    marginLeft: 8,
   },
 });
 

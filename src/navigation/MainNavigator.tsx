@@ -13,8 +13,8 @@ export type MainTabParamList = {
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const MainNavigator = () => {
-  const {colors} = useTheme();
-
+  const { theme } = useTheme();
+  const { colors } = theme;
   return (
     <Tab.Navigator
       screenOptions={{

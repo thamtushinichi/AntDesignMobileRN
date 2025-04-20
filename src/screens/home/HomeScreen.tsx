@@ -19,7 +19,8 @@ import {useTheme} from '../../store/context/ThemeContext';
 import {useAuth} from '../../store/context/AuthContext';
 
 const HomeScreen: React.FC = () => {
-  const {colors} = useTheme();
+  const { theme } = useTheme();
+  const { colors } = theme;
   const {user} = useAuth();
 
   // Sample data for grid

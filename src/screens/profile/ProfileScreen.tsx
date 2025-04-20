@@ -22,12 +22,15 @@ import {useTheme} from '../../store/context/ThemeContext';
 import {useAuth} from '../../store/context/AuthContext';
 
 const ProfileScreen: React.FC = () => {
-  const {colors, theme, setTheme, isDarkMode} = useTheme();
+  // const {colors, theme, setTheme, isDarkMode} = useTheme();
+  const {theme, setThemeType, isDarkMode} = useTheme();
+  const {colors} = theme;
+
   const {user, logout} = useAuth();
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
   const handleDarkModeToggle = (value: boolean) => {
-    setTheme(value ? 'dark' : 'light');
+    setThemeType(value ? 'dark' : 'light');
   };
 
   const handleLogout = async () => {
@@ -49,7 +52,7 @@ const ProfileScreen: React.FC = () => {
         backgroundColor={colors.background}
       />
       <ScrollView style={styles.scrollView}>
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
         <WingBlank size="lg">
           <View style={styles.profileHeader}>
             <View style={[styles.avatarPlaceholder, {backgroundColor: colors.primary}]}>
@@ -64,11 +67,11 @@ const ProfileScreen: React.FC = () => {
           </View>
         </WingBlank>
 
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
 
         <List renderHeader="Account Settings">
           <List.Item
-            extra={<Switch value={isDarkMode} onValueChange={handleDarkModeToggle} />}>
+            extra={<Switch value={isDarkMode} onValueChange={handleDarkModeToggle}/>}>
             Dark Mode
           </List.Item>
           <List.Item arrow="horizontal" onPress={() => Toast.info('Edit Profile pressed', 1)}>
@@ -82,7 +85,7 @@ const ProfileScreen: React.FC = () => {
           </List.Item>
         </List>
 
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
 
         <List renderHeader="App Information">
           <List.Item arrow="horizontal" onPress={() => Toast.info('About pressed', 1)}>
@@ -99,7 +102,7 @@ const ProfileScreen: React.FC = () => {
           </List.Item>
         </List>
 
-        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg"/>
 
         <WingBlank size="lg">
           <Button
@@ -109,7 +112,7 @@ const ProfileScreen: React.FC = () => {
           </Button>
         </WingBlank>
 
-        <WhiteSpace size="xl" />
+        <WhiteSpace size="xl"/>
       </ScrollView>
 
       <Modal
@@ -118,14 +121,14 @@ const ProfileScreen: React.FC = () => {
         animationType="slide-up"
         onClose={() => setLogoutModalVisible(false)}>
         <View style={styles.modalContent}>
-          <Icon name="question-circle" size="lg" color={colors.warning} />
+          <Icon name="question-circle" size="lg" color={colors.warning}/>
           <Text style={[styles.modalTitle, {color: colors.text}]}>
             Confirm Logout
           </Text>
           <Text style={styles.modalSubtitle}>
             Are you sure you want to logout?
           </Text>
-          <WhiteSpace size="lg" />
+          <WhiteSpace size="lg"/>
           <View style={styles.modalButtons}>
             <Button
               type="ghost"

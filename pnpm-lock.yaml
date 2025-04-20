@@ -14,6 +14,9 @@ dependencies:
   '@react-native-async-storage/async-storage':
     specifier: ^2.1.2
     version: 2.1.2(react-native@0.79.1)
+  '@react-native-community/netinfo':
+    specifier: ^11.4.1
+    version: 11.4.1(react-native@0.79.1)
   '@react-navigation/bottom-tabs':
     specifier: ^7.3.10
     version: 7.3.10(@react-navigation/native@7.1.6)(react-native-safe-area-context@5.4.0)(react-native-screens@4.10.0)(react-native@0.79.1)(react@19.0.0)
@@ -2022,6 +2025,14 @@ packages:
       - supports-color
       - typescript
       - utf-8-validate
+
+  /@react-native-community/netinfo@11.4.1(react-native@0.79.1):
+    resolution: {integrity: sha512-B0BYAkghz3Q2V09BF88RA601XursIEA111tnc2JOaN7axJWmNefmfjZqw/KdSxKZp7CZUuPpjBmz/WCR9uaHYg==}
+    peerDependencies:
+      react-native: '>=0.59'
+    dependencies:
+      react-native: 0.79.1(@babel/core@7.26.10)(@react-native-community/cli@18.0.0)(@types/react@19.1.2)(react@19.0.0)
+    dev: false
 
   /@react-native/assets-registry@0.79.1:
     resolution: {integrity: sha512-q5BwZtL0YbaJRgofl8qrD9BNdGJkecTJNYG8VFOVQYXPTBa3ZSooip1aj0wrjoa0HloKx/Hmx5UMvuhfEsjn8A==}
