@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useColorScheme, Appearance } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { spacing, borderRadius, typography, shadows, timing, zIndex, opacity } from '../../theme/tokens';
-import createAntDesignTheme from '../../theme/antDesignTheme';
+import { spacing, borderRadius, typography, timing, zIndex, opacity } from '../../theme/tokens';
+import createAntDesignTheme, { shadows } from '../../theme/antDesignTheme';
 import { Theme as AntTheme } from '@ant-design/react-native/lib/style';
 
 // Theme type definitions

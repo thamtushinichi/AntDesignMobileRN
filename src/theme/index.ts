@@ -1,7 +1,26 @@
-import antDesignTheme from './antDesignTheme';
+import createAntDesignTheme, { palette, shadows } from './antDesignTheme';
+import { spacing, borderRadius, typography, timing, zIndex, opacity } from './tokens';
 
-export {antDesignTheme};
+export {
+  createAntDesignTheme,
+  palette,
+  shadows,
+  spacing,
+  borderRadius,
+  typography,
+  timing,
+  zIndex,
+  opacity,
+};
 
 export default {
-  antDesignTheme,
+  createAntDesignTheme,
+  palette,
+  shadows,
+  spacing,
+  borderRadius,
+  typography,
+  timing,
+  zIndex,
+  opacity,
 };
