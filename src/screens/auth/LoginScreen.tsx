@@ -9,13 +9,12 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { WhiteSpace, WingBlank } from '@ant-design/react-native';
+import { WhiteSpace, WingBlank,Button } from '@ant-design/react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAuth } from '../../store/context/AuthContext';
 import { useTheme } from '../../store/context/ThemeContext';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
 import { Form, FormField } from '../../components/forms';
-import { Button } from '../../components/common';
 import useValidation, { validators } from '../../hooks/useValidation';
 import useApi from '../../hooks/useApi';
 import authService from '../../services/authService';
@@ -35,7 +34,7 @@ interface LoginFormValues {
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const { login } = useAuth();
   const { theme } = useTheme();
-  const { colors } = theme;
+  const { antColors } = theme;
   const { keyboardVisible } = useKeyboard();
 
   // Create login API hook
@@ -71,7 +70,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: antColors.card_background }]}>
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -85,8 +84,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           keyboardShouldPersistTaps="handled">
           <WingBlank size="lg">
             <View style={styles.headerContainer}>
-              <Text style={[styles.title, { color: colors.text }]}>Welcome Back</Text>
-              <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+              <Text style={[styles.title, { color: antColors.color_text_base }]}>Welcome Back</Text>
+              <Text style={[styles.subtitle, { color: antColors.color_text_secondary }]}>
                 Sign in to continue
               </Text>
             </View>
@@ -131,20 +130,21 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                   <WhiteSpace size="xl" />
 
                   <Button
-                    title="Login"
                     type="primary"
                     loading={isSubmitting || loginApi.loading}
                     disabled={isSubmitting || loginApi.loading}
                     onPress={handleSubmit}
                     fullWidth
-                  />
+                  >
+                    Login
+                  </Button>
 
                   <WhiteSpace size="lg" />
 
                   <View style={styles.registerContainer}>
-                    <Text style={{ color: colors.textSecondary }}>Don't have an account? </Text>
+                    <Text style={{ color: antColors.color_text_secondary }}>Don't have an account? </Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                      <Text style={[styles.registerText, { color: colors.primary }]}>
+                      <Text style={[styles.registerText, { color: antColors.brand_primary }]}>
                         Register now
                       </Text>
                     </TouchableOpacity>

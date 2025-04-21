@@ -41,7 +41,7 @@ const FormField: React.FC<FormFieldProps> = ({
                                                required = false,
                                              }) => {
   const { theme } = useTheme();
-  const { colors } = theme;
+  const { antColors } = theme;
 
   // Only show error if field has been touched
   const showError = touched && error;
@@ -50,7 +50,7 @@ const FormField: React.FC<FormFieldProps> = ({
     <View style={[styles.container, style]} testID={`field-${name}`}>
       {label && (
         <View style={styles.labelContainer}>
-          <Text style={[styles.label, { color: colors.text }]}>
+          <Text style={[styles.label, { color: antColors.color_text_base }]}>
             {label}
             {required && <Text style={styles.required}> *</Text>}
           </Text>
@@ -69,8 +69,8 @@ const FormField: React.FC<FormFieldProps> = ({
         autoCapitalize={autoCapitalize}
         maxLength={maxLength}
         testID={testID}
-        style={{ color: colors.text }}
-        placeholderTextColor={colors.placeholder}
+        style={{ color: antColors.color_text_base }}
+        placeholderTextColor={antColors.color_text_placeholder}
       />
 
       {showError && <Text style={styles.errorText}>{error}</Text>}

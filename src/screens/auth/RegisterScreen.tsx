@@ -9,18 +9,17 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { WhiteSpace, WingBlank } from '@ant-design/react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useAuth } from '../../store/context/AuthContext';
-import { useTheme } from '../../store/context/ThemeContext';
-import { AuthStackParamList } from '../../navigation/AuthNavigator';
-import { Form, FormField } from '../../components/forms';
-import { Button } from '../../components/common';
-import useValidation, { validators } from '../../hooks/useValidation';
+import {WhiteSpace, WingBlank, Button} from '@ant-design/react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useAuth} from '../../store/context/AuthContext';
+import {useTheme} from '../../store/context/ThemeContext';
+import {AuthStackParamList} from '../../navigation/AuthNavigator';
+import {Form, FormField} from '../../components/forms';
+import useValidation, {validators} from '../../hooks/useValidation';
 import useApi from '../../hooks/useApi';
 import authService from '../../services/authService';
 import toastService from '../../services/toastService';
-import { useKeyboard } from '../../hooks/useKeyboard';
+import {useKeyboard} from '../../hooks/useKeyboard';
 
 type RegisterScreenProps = {
   navigation: NativeStackNavigationProp<AuthStackParamList, 'Register'>;
@@ -34,11 +33,11 @@ interface RegisterFormValues {
   confirmPassword: string;
 }
 
-const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
-  const { register } = useAuth();
-  const { theme } = useTheme();
-  const { colors } = theme;
-  const { keyboardVisible } = useKeyboard();
+const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
+  const {register} = useAuth();
+  const {theme} = useTheme();
+  const {antColors} = theme;
+  const {keyboardVisible} = useKeyboard();
 
   // Create register API hook
   const registerApi = useApi(authService.register, {
@@ -88,7 +87,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, {backgroundColor: antColors.card_background}]}>
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -97,24 +96,24 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
           contentContainerStyle={[
             styles.scrollContainer,
             // Adjust padding when keyboard is visible
-            keyboardVisible && { paddingBottom: 20 }
+            keyboardVisible && {paddingBottom: 20}
           ]}
           keyboardShouldPersistTaps="handled">
           <WingBlank size="lg">
             <View style={styles.headerContainer}>
-              <Text style={[styles.title, { color: colors.text }]}>Create Account</Text>
-              <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+              <Text style={[styles.title, {color: antColors.color_text_base}]}>Create Account</Text>
+              <Text style={[styles.subtitle, {color: antColors.color_text_secondary}]}>
                 Sign up to get started
               </Text>
             </View>
 
-            <WhiteSpace size="xl" />
+            <WhiteSpace size="xl"/>
 
             <Form
-              initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
+              initialValues={{username: '', email: '', password: '', confirmPassword: ''}}
               onSubmit={handleRegister}
               validate={validateRegister}>
-              {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+              {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
                 <View style={styles.formContainer}>
                   <FormField
                     name="username"
@@ -129,7 +128,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
                     required
                   />
 
-                  <WhiteSpace size="lg" />
+                  <WhiteSpace size="lg"/>
 
                   <FormField
                     name="email"
@@ -145,7 +144,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
                     required
                   />
 
-                  <WhiteSpace size="lg" />
+                  <WhiteSpace size="lg"/>
 
                   <FormField
                     name="password"
@@ -160,7 +159,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
                     required
                   />
 
-                  <WhiteSpace size="lg" />
+                  <WhiteSpace size="lg"/>
 
                   <FormField
                     name="confirmPassword"
@@ -175,23 +174,23 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
                     required
                   />
 
-                  <WhiteSpace size="xl" />
+                  <WhiteSpace size="xl"/>
 
                   <Button
-                    title="Register"
                     type="primary"
                     loading={isSubmitting || registerApi.loading}
                     disabled={isSubmitting || registerApi.loading}
                     onPress={handleSubmit}
-                    fullWidth
-                  />
+                  >
+                    Register
+                  </Button>
 
-                  <WhiteSpace size="lg" />
+                  <WhiteSpace size="lg"/>
 
                   <View style={styles.loginContainer}>
-                    <Text style={{ color: colors.textSecondary }}>Already have an account? </Text>
+                    <Text style={{color: antColors.color_text_secondary}}>Already have an account? </Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                      <Text style={[styles.loginText, { color: colors.primary }]}>
+                      <Text style={[styles.loginText, {color: antColors.brand_primary}]}>
                         Login
                       </Text>
                     </TouchableOpacity>

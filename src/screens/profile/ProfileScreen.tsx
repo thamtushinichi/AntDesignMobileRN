@@ -7,7 +7,6 @@ import {
   ScrollView,
   StatusBar,
   Switch,
-  TouchableOpacity,
 } from 'react-native';
 import {
   List,
@@ -22,9 +21,8 @@ import {useTheme} from '../../store/context/ThemeContext';
 import {useAuth} from '../../store/context/AuthContext';
 
 const ProfileScreen: React.FC = () => {
-  // const {colors, theme, setTheme, isDarkMode} = useTheme();
   const {theme, setThemeType, isDarkMode} = useTheme();
-  const {colors} = theme;
+  const {antColors} = theme;
 
   const {user, logout} = useAuth();
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
@@ -46,21 +44,21 @@ const ProfileScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeAreaView style={[styles.container, {backgroundColor: antColors.card_background}]}>
       <StatusBar
-        barStyle={colors.background === '#ffffff' ? 'dark-content' : 'light-content'}
-        backgroundColor={colors.background}
+        barStyle={antColors.card_background === '#ffffff' ? 'dark-content' : 'light-content'}
+        backgroundColor={antColors.card_background}
       />
       <ScrollView style={styles.scrollView}>
         <WhiteSpace size="lg"/>
         <WingBlank size="lg">
           <View style={styles.profileHeader}>
-            <View style={[styles.avatarPlaceholder, {backgroundColor: colors.primary}]}>
+            <View style={[styles.avatarPlaceholder, {backgroundColor: antColors.brand_primary}]}>
               <Text style={styles.avatarText}>
                 {user?.username?.charAt(0)?.toUpperCase() || 'U'}
               </Text>
             </View>
-            <Text style={[styles.username, {color: colors.text}]}>
+            <Text style={[styles.username, {color: antColors.color_text_base}]}>
               {user?.username || 'User'}
             </Text>
             <Text style={styles.email}>{user?.email || 'user@example.com'}</Text>
@@ -121,8 +119,8 @@ const ProfileScreen: React.FC = () => {
         animationType="slide-up"
         onClose={() => setLogoutModalVisible(false)}>
         <View style={styles.modalContent}>
-          <Icon name="question-circle" size="lg" color={colors.warning}/>
-          <Text style={[styles.modalTitle, {color: colors.text}]}>
+          <Icon name="question-circle" size="lg" color={antColors.warning_color}/>
+          <Text style={[styles.modalTitle, {color: antColors.color_text_base}]}>
             Confirm Logout
           </Text>
           <Text style={styles.modalSubtitle}>

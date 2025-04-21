@@ -1,5 +1,5 @@
-import Button from './Button';
+import ThemeExampleComponent from './ThemeExampleComponent';
 
 export {
-  Button,
+  ThemeExampleComponent,
 };

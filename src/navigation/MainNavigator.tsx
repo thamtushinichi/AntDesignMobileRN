@@ -14,16 +14,16 @@ const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const MainNavigator = () => {
   const { theme } = useTheme();
-  const { colors } = theme;
+  const { antColors } = theme;
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.text,
+        tabBarActiveTintColor: antColors.brand_primary,
+        tabBarInactiveTintColor: antColors.color_text_base,
         tabBarStyle: {
-          backgroundColor: colors.background,
-          borderTopColor: colors.border,
+          backgroundColor: antColors.card_background,
+          borderTopColor: antColors.border_color_base,
         },
       }}>
       <Tab.Screen

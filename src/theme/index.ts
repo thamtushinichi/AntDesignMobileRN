@@ -1,11 +1,7 @@
-import colors from './colors';
-import fonts from './fonts';
-import metrics from './metrics';
+import antDesignTheme from './antDesignTheme';
 
-export {colors, fonts, metrics};
+export {antDesignTheme};
 
 export default {
-  colors,
-  fonts,
-  metrics,
+  antDesignTheme,
 };
