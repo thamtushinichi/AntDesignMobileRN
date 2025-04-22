@@ -16,19 +16,21 @@ const HomeScreen: React.FC = () => {
 
   const tabs = [
     {title: 'Theme'},
+    {title: 'Todo Example'},
   ];
 
   const renderContent = () => {
     switch (activeTab) {
       case 0:
         return <ThemeExampleComponent/>;
+      case 1:
+        return <TodoExample/>;
     }
   };
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor: antColors.fill_body}]}>
       <WhiteSpace size="lg"/>
-
       <WingBlank size="lg">
         <Card>
           <Card.Header
@@ -43,9 +45,7 @@ const HomeScreen: React.FC = () => {
           </Card.Body>
         </Card>
       </WingBlank>
-
       <WhiteSpace size="lg"/>
-
       <Tabs
         tabs={tabs}
         page={activeTab}

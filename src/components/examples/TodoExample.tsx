@@ -55,10 +55,6 @@ const TodoExample: React.FC = () => {
     return true;
   });
 
-  const handleFilterChange = (value: string) => {
-    setFilter(value as 'all' | 'active' | 'completed');
-  };
-
   return (
     <View style={[styles.container, { backgroundColor: antColors.fill_body }]}>
       <ScrollView>
@@ -73,7 +69,7 @@ const TodoExample: React.FC = () => {
               style={[styles.input, {
                 color: antColors.color_text_base,
                 borderColor: antColors.border_color_base,
-                backgroundColor: antColors.fill_base
+                backgroundColor: antColors.fill_base,
               }]}
               value={newTodo}
               onChangeText={setNewTodo}
@@ -89,7 +85,7 @@ const TodoExample: React.FC = () => {
           <WhiteSpace size="lg" />
 
           <List>
-            {filteredTodos.map(todo => (
+            {filteredTodos?.map(todo => (
               <SwipeAction
                 key={todo.id}
                 style={{ backgroundColor: 'transparent' }}
@@ -128,7 +124,6 @@ const TodoExample: React.FC = () => {
               No {filter === 'all' ? '' : filter} tasks found
             </Text>
           )}
-
           <WhiteSpace size="xl" />
         </WingBlank>
       </ScrollView>
