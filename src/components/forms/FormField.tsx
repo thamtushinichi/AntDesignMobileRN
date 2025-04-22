@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { InputItem } from '@ant-design/react-native';
-import { useTheme } from '../../store/context/ThemeContext';
+import { useThemeStore, selectTheme } from '../../store/zustand';
 
 interface FormFieldProps {
   name: string;
@@ -40,9 +40,8 @@ const FormField: React.FC<FormFieldProps> = ({
                                                style,
                                                required = false,
                                              }) => {
-  const { theme } = useTheme();
-  const { antColors } = theme;
-
+  // Use theme from Zustand store instead of context
+  const { antColors } = useThemeStore(selectTheme);
   // Only show error if field has been touched
   const showError = touched && error;
 

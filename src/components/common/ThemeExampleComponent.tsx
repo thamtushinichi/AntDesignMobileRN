@@ -7,13 +7,12 @@ import {
   Card,
   WhiteSpace,
   WingBlank,
-  InputItem
+  InputItem,
 } from '@ant-design/react-native';
-import {useTheme} from '../../store/context/ThemeContext';
+import {selectAntTheme, useThemeStore} from '../../store/zustand';
 
 const ThemeExampleComponent: React.FC = () => {
-  const {antTheme, isDarkMode, toggleTheme} = useTheme();
-
+  const antTheme = useThemeStore(selectAntTheme);
   return (
     <View style={[
       styles.container,
@@ -21,31 +20,6 @@ const ThemeExampleComponent: React.FC = () => {
       {backgroundColor: antTheme.fill_body}
     ]}>
       <WingBlank size="lg">
-        <WhiteSpace size="lg"/>
-
-        <Card>
-          <Card.Header
-            title="Theme Settings"
-            extra={
-              <Switch
-                checked={isDarkMode}
-                onChange={toggleTheme}
-              />
-            }
-          />
-          <Card.Body>
-            <Text style={[
-              styles.text,
-              // Use antTheme for text color
-              {color: antTheme.color_text_base}
-            ]}>
-              Toggle between light and dark mode
-            </Text>
-          </Card.Body>
-        </Card>
-
-        <WhiteSpace size="lg"/>
-
         <View style={styles.buttonsContainer}>
           <Button type="primary">Primary Button</Button>
           <WhiteSpace size="sm"/>
@@ -140,8 +114,7 @@ const ColorBox: React.FC<{
   textColor?: string;
   bordered?: boolean;
 }> = ({color, name, textColor = '#FFFFFF', bordered = false}) => {
-  const {antTheme} = useTheme();
-
+  const antTheme = useThemeStore(selectAntTheme);
   return (
     <View style={styles.colorBoxContainer}>
       <View

@@ -1,14 +1,20 @@
 import React from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useAuth} from '../store/context/AuthContext';
+import {
+  useAuthStore,
+  selectIsAuthenticated,
+  selectAuthLoading
+} from '../store/zustand';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
-  const {isAuthenticated, isLoading} = useAuth();
+  // Use the auth state from Zustand store instead of context
+  const isAuthenticated = useAuthStore(selectIsAuthenticated);
+  const isLoading = useAuthStore(selectAuthLoading);
 
   if (isLoading) {
     return (

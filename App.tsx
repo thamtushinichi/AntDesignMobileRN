@@ -1,5 +1,5 @@
 /**
- * AntDesignMobileRN App
+ * AntDesignMobileRN App with Zustand
  *
  * @format
  */
@@ -10,16 +10,22 @@ import { Provider as AntProvider } from '@ant-design/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './src/navigation/AppNavigator';
-import { ThemeProvider, useTheme } from './src/store/context/ThemeContext';
-import { AuthProvider } from './src/store/context/AuthContext';
+import {
+  useThemeStore,
+  useSyncSystemTheme,
+  selectAntTheme,
+} from './src/store/zustand';
 
-// Themed App component that consumes the theme context
+// Themed App component that uses the theme store
 const ThemedApp = () => {
-  // Get theme from context - now it's already the complete theme
-  const { theme } = useTheme();
+  // Use the theme from Zustand store instead of context
+  const antTheme = useThemeStore(selectAntTheme);
+// For debugging
+  // Sync system theme changes
+  useSyncSystemTheme();
 
   return (
-    <AntProvider theme={theme}>
+    <AntProvider theme={antTheme}>
       <NavigationContainer>
         <AppNavigator />
       </NavigationContainer>
@@ -31,11 +37,7 @@ function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaProvider>
-        <ThemeProvider>
-          <AuthProvider>
-            <ThemedApp />
-          </AuthProvider>
-        </ThemeProvider>
+        <ThemedApp />
       </SafeAreaProvider>
     </SafeAreaView>
   );

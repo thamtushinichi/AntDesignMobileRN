@@ -2,7 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
-import {useTheme} from '../store/context/ThemeContext';
+import {useThemeStore, selectTheme} from '../store/zustand';
 import {Icon} from '@ant-design/react-native';
 
 export type MainTabParamList = {
@@ -13,8 +13,9 @@ export type MainTabParamList = {
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const MainNavigator = () => {
-  const { theme } = useTheme();
-  const { antColors } = theme;
+  // Use the theme from Zustand store instead of context
+  const { antColors } = useThemeStore(selectTheme);
+
   return (
     <Tab.Navigator
       screenOptions={{

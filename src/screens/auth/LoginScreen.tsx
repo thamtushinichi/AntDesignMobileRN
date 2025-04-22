@@ -9,17 +9,15 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { WhiteSpace, WingBlank,Button } from '@ant-design/react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useAuth } from '../../store/context/AuthContext';
-import { useTheme } from '../../store/context/ThemeContext';
-import { AuthStackParamList } from '../../navigation/AuthNavigator';
-import { Form, FormField } from '../../components/forms';
-import useValidation, { validators } from '../../hooks/useValidation';
+import {WhiteSpace, WingBlank, Button} from '@ant-design/react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AuthStackParamList} from '../../navigation/AuthNavigator';
+import {Form, FormField} from '../../components/forms';
+import useValidation, {validators} from '../../hooks/useValidation';
 import useApi from '../../hooks/useApi';
-import authService from '../../services/authService';
+import {useKeyboard} from '../../hooks/useKeyboard';
+import {useAuthStore, useThemeStore, selectTheme} from '../../store/zustand';
 import toastService from '../../services/toastService';
-import { useKeyboard } from '../../hooks/useKeyboard';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<AuthStackParamList, 'Login'>;
@@ -31,19 +29,11 @@ interface LoginFormValues {
   password: string;
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  const { login } = useAuth();
-  const { theme } = useTheme();
-  const { antColors } = theme;
-  const { keyboardVisible } = useKeyboard();
-
-  // Create login API hook
-  const loginApi = useApi(authService.login, {
-    showSuccessToast: true,
-    successMessage: 'Login successful!',
-    showErrorToast: true,
-    errorMessage: 'Login failed. Please check your credentials and try again.',
-  });
+const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
+  // Use Zustand stores instead of context
+  const {login, isLoading} = useAuthStore();
+  const {antColors} = useThemeStore(selectTheme);
+  const {keyboardVisible} = useKeyboard();
 
   // Create form validation schema
   const validateLogin = useValidation<LoginFormValues>({
@@ -56,21 +46,36 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     ],
   });
 
+  // Create login API hook
+  const loginApi = useApi(
+    async (email: string, password: string) => {
+      try {
+        const success = await login(email, password);
+        if (success) {
+          toastService.success('Login successful!');
+        } else {
+          toastService.error('Login failed. Please check your credentials and try again.');
+        }
+        return success;
+      } catch (error) {
+        toastService.error('An error occurred during login.');
+        throw error;
+      }
+    },
+    {
+      showSuccessToast: false, // We'll handle toasts manually
+      showErrorToast: false,
+    }
+  );
+
   // Handle login form submission
   const handleLogin = async (values: LoginFormValues) => {
-    const result = await loginApi.execute(values.email, values.password);
-    if (result) {
-      try {
-        await login(values.email, values.password);
-      } catch (error) {
-        console.error('Login context error:', error);
-        toastService.error('An error occurred while logging in.');
-      }
-    }
+    console.log(values);
+    await loginApi.execute(values.email, values.password);
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: antColors.card_background }]}>
+    <SafeAreaView style={[styles.container, {backgroundColor: antColors.card_background}]}>
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -79,24 +84,24 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           contentContainerStyle={[
             styles.scrollContainer,
             // Adjust padding when keyboard is visible
-            keyboardVisible && { paddingBottom: 20 }
+            keyboardVisible && {paddingBottom: 20}
           ]}
           keyboardShouldPersistTaps="handled">
           <WingBlank size="lg">
             <View style={styles.headerContainer}>
-              <Text style={[styles.title, { color: antColors.color_text_base }]}>Welcome Back</Text>
-              <Text style={[styles.subtitle, { color: antColors.color_text_secondary }]}>
+              <Text style={[styles.title, {color: antColors.color_text_base}]}>Welcome Back</Text>
+              <Text style={[styles.subtitle, {color: antColors.color_text_secondary}]}>
                 Sign in to continue
               </Text>
             </View>
 
-            <WhiteSpace size="xl" />
+            <WhiteSpace size="xl"/>
 
             <Form
-              initialValues={{ email: '', password: '' }}
+              initialValues={{email: '', password: ''}}
               onSubmit={handleLogin}
               validate={validateLogin}>
-              {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+              {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
                 <View style={styles.formContainer}>
                   <FormField
                     name="email"
@@ -112,7 +117,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                     required
                   />
 
-                  <WhiteSpace size="lg" />
+                  <WhiteSpace size="lg"/>
 
                   <FormField
                     name="password"
@@ -127,24 +132,23 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                     required
                   />
 
-                  <WhiteSpace size="xl" />
+                  <WhiteSpace size="xl"/>
 
                   <Button
                     type="primary"
-                    loading={isSubmitting || loginApi.loading}
-                    disabled={isSubmitting || loginApi.loading}
+                    loading={isSubmitting || loginApi.loading || isLoading}
+                    disabled={isSubmitting || loginApi.loading || isLoading}
                     onPress={handleSubmit}
-                    fullWidth
                   >
                     Login
                   </Button>
 
-                  <WhiteSpace size="lg" />
+                  <WhiteSpace size="lg"/>
 
                   <View style={styles.registerContainer}>
-                    <Text style={{ color: antColors.color_text_secondary }}>Don't have an account? </Text>
+                    <Text style={{color: antColors.color_text_secondary}}>Don't have an account? </Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                      <Text style={[styles.registerText, { color: antColors.brand_primary }]}>
+                      <Text style={[styles.registerText, {color: antColors.brand_primary}]}>
                         Register now
                       </Text>
                     </TouchableOpacity>

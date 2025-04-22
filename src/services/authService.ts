@@ -30,7 +30,6 @@ const authService = {
           token: 'fake-jwt-token',
         };
       }
-
       return await api.post<LoginResponse>('/auth/login', {
         email,
         password,

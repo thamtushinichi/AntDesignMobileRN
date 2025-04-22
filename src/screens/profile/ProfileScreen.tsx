@@ -17,14 +17,12 @@ import {
   Icon,
   Toast,
 } from '@ant-design/react-native';
-import {useTheme} from '../../store/context/ThemeContext';
-import {useAuth} from '../../store/context/AuthContext';
+import {useAuthStore, useThemeStore} from '../../store/zustand';
 
 const ProfileScreen: React.FC = () => {
-  const {theme, setThemeType, isDarkMode} = useTheme();
+  const {theme, isDarkMode, setThemeType} = useThemeStore();
+  const {user, logout} = useAuthStore();
   const {antColors} = theme;
-
-  const {user, logout} = useAuth();
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
   const handleDarkModeToggle = (value: boolean) => {
