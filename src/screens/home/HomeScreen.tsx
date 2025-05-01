@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, ScrollView, SafeAreaView, Text} from 'react-native';
+import {StyleSheet, ScrollView, SafeAreaView, Text, View} from 'react-native';
 import {
   Tabs,
   WhiteSpace,
@@ -46,19 +46,20 @@ const HomeScreen: React.FC = () => {
         </Card>
       </WingBlank>
       <WhiteSpace size="lg"/>
-      <Tabs
-        tabs={tabs}
-        page={activeTab}
-        onChange={(tab, index) => setActiveTab(index)}
-        tabBarBackgroundColor={antColors.fill_base}
-        tabBarActiveTextColor={antColors.brand_primary}
-        tabBarInactiveTextColor={antColors.color_text_secondary}
-        tabBarUnderlineStyle={{backgroundColor: antColors.brand_primary}}
-      />
-
-      <ScrollView style={styles.content}>
-        {renderContent()}
-      </ScrollView>
+      <View style={styles.tabContentContainer}>
+        <Tabs
+          tabs={tabs}
+          page={activeTab}
+          onChange={(tab, index) => setActiveTab(index)}
+          tabBarBackgroundColor={antColors.fill_base}
+          tabBarActiveTextColor={antColors.brand_primary}
+          tabBarInactiveTextColor={antColors.color_text_secondary}
+          tabBarUnderlineStyle={{backgroundColor: antColors.brand_primary}}
+        />
+        <ScrollView style={styles.contentContainer}>
+          {renderContent()}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -67,7 +68,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  content: {
+  // Fix: Add container for tabs + content
+  tabContentContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  // Fix: Style the content container properly
+  contentContainer: {
     flex: 1,
   },
 });

@@ -80,10 +80,8 @@ const TodoExample: React.FC = () => {
               Add
             </Button>
           </View>
-
           <WhiteSpace size="lg" />
           <WhiteSpace size="lg" />
-
           <List>
             {filteredTodos?.map(todo => (
               <SwipeAction
