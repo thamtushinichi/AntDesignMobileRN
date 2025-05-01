@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {StyleSheet, ScrollView, SafeAreaView, Text, View} from 'react-native';
+import {StyleSheet, SafeAreaView, Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import {
-  Tabs,
   WhiteSpace,
   WingBlank,
   Card,
@@ -14,6 +13,7 @@ const HomeScreen: React.FC = () => {
   const {antColors} = useThemeStore(selectTheme);
   const [activeTab, setActiveTab] = useState(0);
 
+  // Đơn giản hóa tabs
   const tabs = [
     {title: 'Theme'},
     {title: 'Todo Example'},
@@ -25,6 +25,8 @@ const HomeScreen: React.FC = () => {
         return <ThemeExampleComponent/>;
       case 1:
         return <TodoExample/>;
+      default:
+        return <ThemeExampleComponent/>;
     }
   };
 
@@ -46,20 +48,41 @@ const HomeScreen: React.FC = () => {
         </Card>
       </WingBlank>
       <WhiteSpace size="lg"/>
-      <View style={styles.tabContentContainer}>
-        <Tabs
-          tabs={tabs}
-          page={activeTab}
-          onChange={(tab, index) => setActiveTab(index)}
-          tabBarBackgroundColor={antColors.fill_base}
-          tabBarActiveTextColor={antColors.brand_primary}
-          tabBarInactiveTextColor={antColors.color_text_secondary}
-          tabBarUnderlineStyle={{backgroundColor: antColors.brand_primary}}
-        />
-        <ScrollView style={styles.contentContainer}>
-          {renderContent()}
-        </ScrollView>
+
+      {/* Tự tạo custom tab bar thay vì dùng component Tabs */}
+      <View style={styles.customTabBar}>
+        {tabs.map((tab, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.tabButton,
+              activeTab === index && styles.activeTabButton
+            ]}
+            onPress={() => setActiveTab(index)}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                {color: activeTab === index ? antColors.brand_primary : antColors.color_text_secondary}
+              ]}
+            >
+              {tab.title}
+            </Text>
+            {activeTab === index && (
+              <View
+                style={[
+                  styles.tabIndicator,
+                  {backgroundColor: antColors.brand_primary}
+                ]}
+              />
+            )}
+          </TouchableOpacity>
+        ))}
       </View>
+
+      <ScrollView style={styles.contentContainer}>
+        {renderContent()}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -68,15 +91,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  // Fix: Add container for tabs + content
-  tabContentContainer: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  // Fix: Style the content container properly
   contentContainer: {
     flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  customTabBar: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEEEEE',
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 12,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  activeTabButton: {
+    // Active tab styling
+  },
+  tabText: {
+    fontSize: 16,
+  },
+  tabIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: 20,
+    right: 20,
+    height: 2,
   },
 });
 

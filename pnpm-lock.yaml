@@ -35,6 +35,9 @@ dependencies:
   react-native:
     specifier: 0.79.1
     version: 0.79.1(@babel/core@7.26.10)(@react-native-community/cli@18.0.0)(@types/react@19.1.2)(react@19.0.0)
+  react-native-gesture-handler:
+    specifier: ^2.25.0
+    version: 2.25.0(react-native@0.79.1)(react@19.0.0)
   react-native-safe-area-context:
     specifier: ^5.4.0
     version: 5.4.0(react-native@0.79.1)(react@19.0.0)
