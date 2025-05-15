@@ -36,7 +36,7 @@ const ThemedApp = () => {
 
 function App(): React.JSX.Element {
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
         <SafeAreaProvider>
           <ThemedApp/>

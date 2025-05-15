@@ -12,7 +12,6 @@ import {
 import {WhiteSpace, WingBlank, Button} from '@ant-design/react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useAuth} from '../../store/context/AuthContext';
-import {useTheme} from '../../store/context/ThemeContext';
 import {AuthStackParamList} from '../../navigation/AuthNavigator';
 import {Form, FormField} from '../../components/forms';
 import useValidation, {validators} from '../../hooks/useValidation';
@@ -20,6 +19,7 @@ import useApi from '../../hooks/useApi';
 import authService from '../../services/authService';
 import toastService from '../../services/toastService';
 import {useKeyboard} from '../../hooks/useKeyboard';
+import {selectTheme, useThemeStore} from '../../store/zustand';
 
 type RegisterScreenProps = {
   navigation: NativeStackNavigationProp<AuthStackParamList, 'Register'>;
@@ -35,8 +35,9 @@ interface RegisterFormValues {
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
   const {register} = useAuth();
-  const {theme} = useTheme();
-  const {antColors} = theme;
+  // const {theme} = useTheme();
+  // const {antColors} = theme;
+  const {antColors} = useThemeStore(selectTheme);
   const {keyboardVisible} = useKeyboard();
 
   // Create register API hook
@@ -96,7 +97,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
           contentContainerStyle={[
             styles.scrollContainer,
             // Adjust padding when keyboard is visible
-            keyboardVisible && {paddingBottom: 20}
+            keyboardVisible && {paddingBottom: 20},
           ]}
           keyboardShouldPersistTaps="handled">
           <WingBlank size="lg">
