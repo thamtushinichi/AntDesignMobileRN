@@ -1,13 +1,13 @@
-# Enhanced Ant Design Mobile RN Boilerplate
+# React Native with Tamagui
 
-A modern, type-safe React Native boilerplate with Ant Design Mobile RN components, comprehensive form handling, theming system, and utility hooks.
+A modern, type-safe React Native boilerplate using Tamagui UI library, Zustand state management, and comprehensive utilities.
 
 ## Features
 
 - ✅ **React Native 0.79+** - Latest React Native version with improved architecture
-- 🎨 **Ant Design Mobile RN** - Beautiful UI components based on Ant Design
+- 🎨 **Tamagui UI** - Beautiful, performant UI components
 - 📝 **TypeScript** - Type safety and improved developer experience
-- 🔄 **Context API** - For global state management
+- 🔄 **Zustand + Immer** - Simple yet powerful state management
 - 🎯 **React Navigation 7** - Fully typed navigation with latest API
 - 🧩 **Modular architecture** - Organized folder structure for scalability
 - 🌓 **Light & Dark themes** - Complete theming system with design tokens
@@ -26,7 +26,8 @@ src/
 ├── components/            # Reusable UI components
 │   ├── common/            # Common UI components (buttons, cards, etc.)
 │   ├── forms/             # Form-specific components
-│   └── layout/            # Layout components
+│   ├── examples/          # Example components
+│   └── ui/                # Tamagui UI components
 ├── config/                # Application configuration
 ├── hooks/                 # Custom React hooks
 │   ├── useApi.ts          # API request handling with loading/error states
@@ -40,11 +41,8 @@ src/
 │   ├── authService.ts     # Authentication service
 │   └── toastService.ts    # Toast notification service
 ├── store/                 # Global state management
-│   └── context/           # React Context providers
-├── theme/                 # Theming system
-│   ├── colors.ts          # Color palette
-│   ├── tokens.ts          # Design tokens (spacing, typography, etc.)
-│   └── index.ts           # Theme exports
+│   └── zustand/           # Zustand stores
+├── tamagui.config.ts      # Tamagui theme configuration
 ├── types/                 # TypeScript type definitions
 └── utils/                 # Utility functions
     ├── dateUtils.ts       # Date formatting and manipulation
@@ -121,11 +119,7 @@ The boilerplate includes a powerful form system built on top of custom hooks:
 ### Form Component
 
 ```tsx
-<Form
-  initialValues={{ email: '', password: '' }}
-  onSubmit={handleSubmit}
-  validate={validateForm}
->
+
   {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
     <>
       <FormField
@@ -139,14 +133,10 @@ The boilerplate includes a powerful form system built on top of custom hooks:
         required
       />
       
-      <Button 
-        title="Submit" 
-        onPress={handleSubmit} 
-        fullWidth 
-      />
+      
     </>
   )}
-</Form>
+
 ```
 
 ### Validation
@@ -168,25 +158,38 @@ const validateForm = useValidation({
 
 ## Theming System
 
-The theming system uses design tokens for consistent styling:
+The theming system uses Tamagui's design tokens for consistent styling:
 
 ```tsx
 // Access theme in components
-const { theme } = useTheme();
-const { colors, spacing, typography } = theme;
+import { useTheme } from 'tamagui';
 
-// Use theme properties in styles
-const styles = StyleSheet.create({
-  container: {
-    padding: spacing.m,
-    backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: typography.fontSizes.xl,
-    fontWeight: typography.fontWeights.bold,
-    color: colors.text,
-  },
-});
+const Component = () => {
+  const theme = useTheme();
+  
+  return (
+    
+      Themed text
+    
+  );
+};
+```
+
+### Theme Switching
+
+Dark/light theme switching is supported out-of-the-box:
+
+```tsx
+import { useThemeStore, selectIsDarkMode } from '../store/zustand';
+
+const Component = () => {
+  const isDarkMode = useThemeStore(selectIsDarkMode);
+  const toggleTheme = useThemeStore(state => state.toggleTheme);
+  
+  return (
+    
+  );
+};
 ```
 
 ## API Utilities
@@ -208,8 +211,8 @@ const loadUser = async (userId) => {
 };
 
 // Access loading and error states
-if (userApi.loading) return <Loading />;
-if (userApi.error) return <Error message={userApi.error.message} />;
+if (userApi.loading) return ;
+if (userApi.error) return {userApi.error.message};
 ```
 
 ## Toast Notifications
@@ -217,16 +220,26 @@ if (userApi.error) return <Error message={userApi.error.message} />;
 Display toast notifications with the toast service:
 
 ```tsx
-import toastService from '../services/toastService';
+import { toastService } from '../components/ui';
 
 // Show different types of toasts
 toastService.success('Operation completed successfully');
 toastService.error('An error occurred');
 toastService.warning('Please check your input');
 toastService.info('Information message');
+```
 
-// Show toast with custom duration
-toastService.success('Custom duration', 5); // 5 seconds
+## State Management with Zustand
+
+The project uses Zustand with Immer for simple yet powerful state management:
+
+```tsx
+// Accessing state
+const user = useAuthStore(state => state.user);
+const login = useAuthStore(state => state.login);
+
+// Using actions
+await login(email, password);
 ```
 
 ## Custom Hooks
@@ -245,7 +258,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- [Ant Design Mobile RN](https://rn.mobile.ant.design/)
+- [Tamagui](https://tamagui.dev/)
 - [React Native](https://reactnative.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [React Navigation](https://reactnavigation.org/)
+- [Zustand](https://github.com/pmndrs/zustand)

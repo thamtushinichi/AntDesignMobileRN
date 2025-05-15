@@ -1,26 +1,24 @@
+// src/navigation/AppNavigator.tsx
 import React from 'react';
-import {ActivityIndicator, View} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  useAuthStore,
-  selectIsAuthenticated,
-  selectAuthLoading
-} from '../store/zustand';
+import { YStack, Spinner } from 'tamagui';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { useAuthStore, selectIsAuthenticated, selectAuthLoading } from '../store/zustand';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
-  // Use the auth state from Zustand store instead of context
+  // Use the auth state from Zustand store
   const isAuthenticated = useAuthStore(selectIsAuthenticated);
   const isLoading = useAuthStore(selectAuthLoading);
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" />
-      </View>
+      <YStack flex={1} justifyContent="center" alignItems="center">
+        <Spinner size="large" color="$primary" />
+      </YStack>
     );
   }
 
@@ -29,7 +27,8 @@ const AppNavigator = () => {
       screenOptions={{
         headerShown: false,
         animation: 'slide_from_right',
-      }}>
+      }}
+    >
       {isAuthenticated ? (
         <Stack.Screen name="Main" component={MainNavigator} />
       ) : (

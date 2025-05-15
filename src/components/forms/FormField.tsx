@@ -1,7 +1,7 @@
+// src/components/forms/FormField.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { InputItem } from '@ant-design/react-native';
-import { useThemeStore, selectTheme } from '../../store/zustand';
+import { YStack } from 'tamagui';
+import { Input } from '../ui';
 
 interface FormFieldProps {
   name: string;
@@ -18,7 +18,6 @@ interface FormFieldProps {
   disabled?: boolean;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   testID?: string;
-  style?: ViewStyle;
   required?: boolean;
 }
 
@@ -37,68 +36,31 @@ const FormField: React.FC<FormFieldProps> = ({
                                                disabled = false,
                                                autoCapitalize = 'none',
                                                testID,
-                                               style,
                                                required = false,
                                              }) => {
-  // Use theme from Zustand store instead of context
-  const { antColors } = useThemeStore(selectTheme);
   // Only show error if field has been touched
   const showError = touched && error;
 
   return (
-    <View style={[styles.container, style]} testID={`field-${name}`}>
-      {label && (
-        <View style={styles.labelContainer}>
-          <Text style={[styles.label, { color: antColors.color_text_base }]}>
-            {label}
-            {required && <Text style={styles.required}> *</Text>}
-          </Text>
-        </View>
-      )}
-
-      <InputItem
-        type={secureTextEntry ? 'password' : keyboardType === 'email-address' ? 'email' : 'text'}
+    <YStack testID={`field-${name}`} marginBottom="$md">
+      <Input
+        label={label}
         value={value}
-        onChange={onChange}
-        onBlur={onBlur}
+        secureTextEntry={secureTextEntry}
         placeholder={placeholder}
-        error={!!showError}
-        disabled={disabled}
-        clear
+        keyboardType={keyboardType as any}
         autoCapitalize={autoCapitalize}
+        error={showError ? error : undefined}
+        onChangeText={onChange}
+        onBlur={onBlur}
         maxLength={maxLength}
+        disabled={disabled}
+        required={required}
+        id={name}
         testID={testID}
-        style={{ color: antColors.color_text_base }}
-        placeholderTextColor={antColors.color_text_placeholder}
       />
-
-      {showError && <Text style={styles.errorText}>{error}</Text>}
-    </View>
+    </YStack>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    marginBottom: 6,
-    marginLeft: 15,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  required: {
-    color: '#f5222d',
-  },
-  errorText: {
-    color: '#f5222d',
-    fontSize: 12,
-    marginTop: 4,
-    marginLeft: 15,
-  },
-});
 
 export default FormField;

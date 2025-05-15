@@ -1,126 +1,150 @@
-import React, {useState} from 'react';
-import {StyleSheet, SafeAreaView, Text, View, TouchableOpacity, ScrollView} from 'react-native';
-import {
-  WhiteSpace,
-  WingBlank,
-  Card,
-} from '@ant-design/react-native';
-import {useThemeStore, selectTheme} from '../../store/zustand';
+// src/screens/home/HomeScreen.tsx
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView } from 'react-native';
+import { YStack, XStack, Text, View, Tabs, Separator } from 'tamagui';
+
+import { useThemeStore, selectIsDarkMode } from '../../store/zustand';
+import { Card } from '../../components/ui';
 import TodoExample from '../../components/examples/TodoExample';
-import {ThemeExampleComponent} from '../../components/common';
+import ThemeExampleComponent from '../../components/common/ThemeExampleComponent';
+import ModalExample from '../../components/examples/ModalExample';
+import ComponentsExample from '../../components/examples/ComponentsExample';
 
 const HomeScreen: React.FC = () => {
-  const {antColors} = useThemeStore(selectTheme);
-  const [activeTab, setActiveTab] = useState(0);
-
-  // Đơn giản hóa tabs
-  const tabs = [
-    {title: 'Theme'},
-    {title: 'Todo Example'},
-  ];
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 0:
-        return <ThemeExampleComponent/>;
-      case 1:
-        return <TodoExample/>;
-      default:
-        return <ThemeExampleComponent/>;
-    }
-  };
+  const isDarkMode = useThemeStore(selectIsDarkMode);
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: antColors.fill_body}]}>
-      <WhiteSpace size="lg"/>
-      <WingBlank size="lg">
-        <Card>
-          <Card.Header
-            title="Zustand + Immer Examples"
-            extra={<Text style={{color: antColors.color_link}}>State Management</Text>}
-          />
-          <Card.Body>
-            <Text style={{color: antColors.color_text_base, padding: 10}}>
-              These examples showcase how to use Zustand with Immer for state management in React Native.
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
+        <YStack padding="$lg" space="$lg">
+          <Card
+            title="Tamagui Examples"
+            subtitle="Modern React Native UI Library"
+          >
+            <Text color="$color" padding="$sm">
+              These examples showcase Tamagui components and styling capabilities.
               Browse through the tabs to see different implementations.
             </Text>
-          </Card.Body>
-        </Card>
-      </WingBlank>
-      <WhiteSpace size="lg"/>
+          </Card>
 
-      {/* Tự tạo custom tab bar thay vì dùng component Tabs */}
-      <View style={styles.customTabBar}>
-        {tabs.map((tab, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.tabButton,
-              activeTab === index && styles.activeTabButton
-            ]}
-            onPress={() => setActiveTab(index)}
+          <Tabs
+            defaultValue="components"
+            orientation="horizontal"
+            flexDirection="column"
+            borderRadius="$lg"
+            backgroundColor="$background"
+            borderColor="$borderColor"
+            borderWidth={1}
+            overflow="hidden"
           >
-            <Text
-              style={[
-                styles.tabText,
-                {color: activeTab === index ? antColors.brand_primary : antColors.color_text_secondary}
-              ]}
+            <Tabs.List
+              backgroundColor="$background"
+              borderBottomColor="$borderColor"
+              borderBottomWidth={1}
+              paddingHorizontal="$md"
             >
-              {tab.title}
-            </Text>
-            {activeTab === index && (
-              <View
-                style={[
-                  styles.tabIndicator,
-                  {backgroundColor: antColors.brand_primary}
-                ]}
-              />
-            )}
-          </TouchableOpacity>
-        ))}
-      </View>
+              <Tabs.Tab flex={1} value="components">
+                <Text>Components</Text>
+              </Tabs.Tab>
+              <Tabs.Tab flex={1} value="theme">
+                <Text>Theme</Text>
+              </Tabs.Tab>
+              <Tabs.Tab flex={1} value="todo">
+                <Text>Todo</Text>
+              </Tabs.Tab>
+              <Tabs.Tab flex={1} value="modal">
+                <Text>Modal</Text>
+              </Tabs.Tab>
+            </Tabs.List>
 
-      <ScrollView style={styles.contentContainer}>
-        {renderContent()}
+            <Tabs.Content value="components">
+              <ComponentsExample />
+            </Tabs.Content>
+
+            <Tabs.Content value="theme">
+              <ThemeExampleComponent />
+            </Tabs.Content>
+
+            <Tabs.Content value="todo">
+              <TodoExample />
+            </Tabs.Content>
+
+            <Tabs.Content value="modal">
+              <ModalExample />
+            </Tabs.Content>
+          </Tabs>
+        </YStack>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentContainer: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-  customTabBar: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEEEEE',
-  },
-  tabButton: {
-    flex: 1,
-    paddingVertical: 12,
-    alignItems: 'center',
-    position: 'relative',
-  },
-  activeTabButton: {
-    // Active tab styling
-  },
-  tabText: {
-    fontSize: 16,
-  },
-  tabIndicator: {
-    position: 'absolute',
-    bottom: 0,
-    left: 20,
-    right: 20,
-    height: 2,
-  },
-});
+export default HomeScreen;
+import { Card } from '../../components/ui';
+import TodoExample from '../../components/examples/TodoExample';
+import ThemeExampleComponent from '../../components/common/ThemeExampleComponent';
+import ModalExample from '../../components/examples/ModalExample';
+
+const HomeScreen: React.FC = () => {
+  const isDarkMode = useThemeStore(selectIsDarkMode);
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
+        <YStack padding="$lg" space="$lg">
+          <Card
+            title="Tamagui Examples"
+            subtitle="Modern React Native UI Library"
+          >
+            <Text color="$color" padding="$sm">
+              These examples showcase Tamagui components and styling capabilities.
+              Browse through the tabs to see different implementations.
+            </Text>
+          </Card>
+
+          <Tabs
+            defaultValue="theme"
+            orientation="horizontal"
+            flexDirection="column"
+            borderRadius="$lg"
+            backgroundColor="$background"
+            borderColor="$borderColor"
+            borderWidth={1}
+            overflow="hidden"
+          >
+            <Tabs.List
+              backgroundColor="$background"
+              borderBottomColor="$borderColor"
+              borderBottomWidth={1}
+              paddingHorizontal="$md"
+            >
+              <Tabs.Tab flex={1} value="theme">
+                <Text>Theme</Text>
+              </Tabs.Tab>
+              <Tabs.Tab flex={1} value="todo">
+                <Text>Todo</Text>
+              </Tabs.Tab>
+              <Tabs.Tab flex={1} value="modal">
+                <Text>Modal</Text>
+              </Tabs.Tab>
+            </Tabs.List>
+
+            <Tabs.Content value="theme">
+              <ThemeExampleComponent />
+            </Tabs.Content>
+
+            <Tabs.Content value="todo">
+              <TodoExample />
+            </Tabs.Content>
+
+            <Tabs.Content value="modal">
+              <ModalExample />
+            </Tabs.Content>
+          </Tabs>
+        </YStack>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 export default HomeScreen;

@@ -1,47 +1,57 @@
 /**
- * AntDesignMobileRN App with Zustand
+ * Tamagui React Native App
  *
  * @format
  */
 
-import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
-import {Provider as AntProvider} from '@ant-design/react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './src/navigation/AppNavigator';
-import {
-  useThemeStore,
-  useSyncSystemTheme,
-  selectAntTheme,
-} from './src/store/zustand';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { useThemeStore, useSyncSystemTheme, selectIsDarkMode } from './src/store/zustand';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { TamaguiProvider, Theme } from 'tamagui';
+import config from './src/tamagui.config';
+import { ToastProvider, toastService } from './src/components/ui';
 
 // Themed App component that uses the theme store
 const ThemedApp = () => {
-  // Use the theme from Zustand store instead of context
-  const antTheme = useThemeStore(selectAntTheme);
-// For debugging
+  // Use the theme from Zustand store
+  const isDarkMode = useThemeStore(selectIsDarkMode);
+
   // Sync system theme changes
   useSyncSystemTheme();
 
+  // Ref for toast provider to be used by toast service
+  const setToastProviderRef = (provider: any) => {
+    toastService.setProvider(provider);
+  };
+
   return (
-    <AntProvider theme={antTheme}>
-      <NavigationContainer>
-        <AppNavigator/>
-      </NavigationContainer>
-    </AntProvider>
+    <Theme name={isDarkMode ? 'dark' : 'light'}>
+      <ToastProvider ref={setToastProviderRef} position="top">
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </ToastProvider>
+    </Theme>
   );
 };
 
 function App(): React.JSX.Element {
+  // Set TAMAGUI_TARGET environment variable for optimization
+  useEffect(() => {
+    process.env.TAMAGUI_TARGET = 'native';
+  }, []);
+
   return (
     <GestureHandlerRootView style={styles.container}>
-      <SafeAreaView style={styles.container}>
-        <SafeAreaProvider>
-          <ThemedApp/>
-        </SafeAreaProvider>
-      </SafeAreaView>
+      <SafeAreaProvider style={styles.container}>
+        <TamaguiProvider config={config}>
+          <ThemedApp />
+        </TamaguiProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }

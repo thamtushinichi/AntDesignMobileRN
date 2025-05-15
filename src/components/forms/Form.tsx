@@ -1,5 +1,6 @@
+// src/components/forms/Form.tsx
 import React, { ReactNode } from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { YStack } from 'tamagui';
 import useForm from '../../hooks/useForm';
 
 export type FormValues = Record<string, any>;
@@ -20,7 +21,6 @@ interface FormProps<T extends FormValues> {
     setFieldError: <K extends keyof T>(field: K, error: string) => void;
     setFieldTouched: (field: keyof T, isTouched?: boolean) => void;
   }) => ReactNode;
-  style?: ViewStyle;
 }
 
 function Form<T extends FormValues>({
@@ -28,7 +28,6 @@ function Form<T extends FormValues>({
                                       onSubmit,
                                       validate,
                                       children,
-                                      style,
                                     }: FormProps<T>) {
   const formProps = useForm<T>({
     initialValues,
@@ -36,13 +35,7 @@ function Form<T extends FormValues>({
     validate,
   });
 
-  return <View style={[styles.container, style]}>{children(formProps)}</View>;
+  return <YStack width="100%">{children(formProps)}</YStack>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-});
 
 export default Form;

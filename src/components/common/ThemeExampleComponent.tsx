@@ -1,173 +1,105 @@
+// src/components/common/ThemeExampleComponent.tsx
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {
-  Button,
-  List,
-  Switch,
-  Card,
-  WhiteSpace,
-  WingBlank,
-  InputItem,
-} from '@ant-design/react-native';
-import {selectAntTheme, useThemeStore} from '../../store/zustand';
+import { YStack, XStack, Text, Switch, Input, Button, Card, View, H3, Separator } from 'tamagui';
+import { useThemeStore, selectIsDarkMode } from '../../store/zustand';
 
 const ThemeExampleComponent: React.FC = () => {
-  const antTheme = useThemeStore(selectAntTheme);
+  const isDarkMode = useThemeStore(selectIsDarkMode);
+
   return (
-    <View style={[
-      styles.container,
-      // Use antTheme for background colors
-      {backgroundColor: antTheme.fill_body}
-    ]}>
-      <WingBlank size="lg">
-        <View style={styles.buttonsContainer}>
-          <Button type="primary">Primary Button</Button>
-          <WhiteSpace size="sm"/>
-          <Button type="warning">Warning Button</Button>
-          <WhiteSpace size="sm"/>
-          <Button type="ghost">Ghost Button</Button>
-        </View>
+    <YStack padding="$md" space="$lg">
+      <YStack space="$md">
+        <H3>Buttons</H3>
+        <XStack space="$sm" flexWrap="wrap">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="danger">Danger</Button>
+        </XStack>
+      </YStack>
 
-        <WhiteSpace size="lg"/>
+      <Separator />
 
-        <List renderHeader={() => "Form Example"}>
-          <InputItem placeholder="Username"/>
-          <InputItem placeholder="Password" type="password"/>
-          <List.Item
-            extra={<Switch/>}
-          >
-            Enable Notifications
-          </List.Item>
-        </List>
+      <YStack space="$md">
+        <H3>Form Elements</H3>
+        <YStack space="$md">
+          <Input
+            placeholder="Username"
+            label="Username"
+          />
+          <Input
+            placeholder="Password"
+            label="Password"
+            secureTextEntry
+          />
+          <XStack alignItems="center" space="$md">
+            <Text>Dark Mode</Text>
+            <Switch checked={isDarkMode} onCheckedChange={useThemeStore.getState().toggleTheme} />
+          </XStack>
+        </YStack>
+      </YStack>
 
-        <WhiteSpace size="lg"/>
+      <Separator />
 
-        <Card>
-          <Card.Header title="Theme Colors"/>
-          <Card.Body>
-            <View style={styles.colorRow}>
-              <ColorBox
-                color={antTheme.brand_primary}
-                name="Primary"
-              />
-              <ColorBox
-                color={antTheme.success_color}
-                name="Success"
-              />
-              <ColorBox
-                color={antTheme.warning_color}
-                name="Warning"
-              />
-              <ColorBox
-                color={antTheme.error_color}
-                name="Error"
-              />
-            </View>
-
-            <WhiteSpace size="md"/>
-
-            <View style={styles.colorRow}>
-              <ColorBox
-                color={antTheme.color_text_base}
-                name="Text"
-                textColor={antTheme.color_text_base_inverse}
-              />
-              <ColorBox
-                color={antTheme.color_text_secondary}
-                name="Secondary"
-                textColor={antTheme.color_text_base_inverse}
-              />
-              <ColorBox
-                color={antTheme.fill_base}
-                name="Background"
-                textColor={antTheme.color_text_base}
-                bordered
-              />
-              <ColorBox
-                color={antTheme.border_color_base}
-                name="Border"
-                textColor={antTheme.color_text_base}
-              />
-            </View>
-          </Card.Body>
+      <YStack space="$md">
+        <H3>Cards</H3>
+        <Card size="medium">
+          <Card.Header>
+            <Text fontSize="$lg" fontWeight="bold">Card Title</Text>
+          </Card.Header>
+          <Separator marginVertical="$sm" />
+          <YStack space="$sm">
+            <Text>This is a simple card content. Cards are useful for grouping related content.</Text>
+          </YStack>
         </Card>
+      </YStack>
 
-        <WhiteSpace size="lg"/>
+      <Separator />
 
-        <Text style={[
-          styles.description,
-          {color: antTheme.color_text_secondary}
-        ]}>
-          This example uses a single Ant Design theme for both component styling and custom UI elements.
-        </Text>
-
-        <WhiteSpace size="lg"/>
-      </WingBlank>
-    </View>
+      <YStack space="$md">
+        <H3>Theme Colors</H3>
+        <XStack space="$sm" flexWrap="wrap">
+          <ColorBlock name="Primary" color="$primary" />
+          <ColorBlock name="Background" color="$background" />
+          <ColorBlock name="Card" color="$card" />
+          <ColorBlock name="Text" color="$color" invertText />
+        </XStack>
+        <XStack space="$sm" flexWrap="wrap" marginTop="$sm">
+          <ColorBlock name="Success" color="$success" />
+          <ColorBlock name="Warning" color="$warning" />
+          <ColorBlock name="Error" color="$error" />
+          <ColorBlock name="Border" color="$borderColor" />
+        </XStack>
+      </YStack>
+    </YStack>
   );
 };
 
 // Helper component to display color swatches
-const ColorBox: React.FC<{
-  color: string;
+const ColorBlock: React.FC<{
   name: string;
-  textColor?: string;
-  bordered?: boolean;
-}> = ({color, name, textColor = '#FFFFFF', bordered = false}) => {
-  const antTheme = useThemeStore(selectAntTheme);
+  color: string;
+  invertText?: boolean;
+}> = ({ name, color, invertText }) => {
   return (
-    <View style={styles.colorBoxContainer}>
+    <YStack>
       <View
-        style={[
-          styles.colorBox,
-          {
-            backgroundColor: color,
-            borderWidth: bordered ? 1 : 0,
-            borderColor: antTheme.border_color_base
-          }
-        ]}
+        width={70}
+        height={70}
+        backgroundColor={color}
+        borderRadius="$sm"
+        alignItems="center"
+        justifyContent="center"
+        marginBottom="$xs"
+        borderWidth={1}
+        borderColor="$borderColor"
       >
-        <Text style={[styles.colorName, {color: textColor}]}>
+        <Text color={invertText ? "$background" : "$color"} fontSize="$xs" fontWeight="bold">
           {name}
         </Text>
       </View>
-    </View>
+    </YStack>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  description: {
-    fontSize: 14,
-    lineHeight: 20,
-    textAlign: 'center',
-  },
-  buttonsContainer: {
-    marginVertical: 10,
-  },
-  colorRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  colorBoxContainer: {
-    width: '24%',
-  },
-  colorBox: {
-    height: 60,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  colorName: {
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-});
 
 export default ThemeExampleComponent;

@@ -1,23 +1,22 @@
+// src/screens/auth/LoginScreen.tsx
 import React from 'react';
 import {
-  View,
-  StyleSheet,
-  Text,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {WhiteSpace, WingBlank, Button} from '@ant-design/react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AuthStackParamList} from '../../navigation/AuthNavigator';
-import {Form, FormField} from '../../components/forms';
-import useValidation, {validators} from '../../hooks/useValidation';
+import { YStack, XStack, Text, View } from 'tamagui';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import { AuthStackParamList } from '../../navigation/AuthNavigator';
+import { Form, FormField } from '../../components/forms';
+import { Button } from '../../components/ui';
+import useValidation, { validators } from '../../hooks/useValidation';
 import useApi from '../../hooks/useApi';
-import {useKeyboard} from '../../hooks/useKeyboard';
-import {useAuthStore, useThemeStore, selectTheme} from '../../store/zustand';
-import toastService from '../../services/toastService';
+import { useKeyboard } from '../../hooks/useKeyboard';
+import { useAuthStore } from '../../store/zustand';
+import { toastService } from '../../components/ui';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<AuthStackParamList, 'Login'>;
@@ -29,11 +28,10 @@ interface LoginFormValues {
   password: string;
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
-  // Use Zustand stores instead of context
-  const {login, isLoading} = useAuthStore();
-  const {antColors} = useThemeStore(selectTheme);
-  const {keyboardVisible} = useKeyboard();
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+  // Use Zustand stores
+  const { login, isLoading } = useAuthStore();
+  const { keyboardVisible } = useKeyboard();
 
   // Create form validation schema
   const validateLogin = useValidation<LoginFormValues>({
@@ -70,134 +68,108 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
 
   // Handle login form submission
   const handleLogin = async (values: LoginFormValues) => {
-    console.log(values);
     await loginApi.execute(values.email, values.password);
   };
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: antColors.card_background}]}>
+    <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
-        style={styles.keyboardView}
+        style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+      >
         <ScrollView
-          contentContainerStyle={[
-            styles.scrollContainer,
-            // Adjust padding when keyboard is visible
-            keyboardVisible && {paddingBottom: 20}
-          ]}
-          keyboardShouldPersistTaps="handled">
-          <WingBlank size="lg">
-            <View style={styles.headerContainer}>
-              <Text style={[styles.title, {color: antColors.color_text_base}]}>Welcome Back</Text>
-              <Text style={[styles.subtitle, {color: antColors.color_text_secondary}]}>
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'center',
+            padding: 16,
+            paddingBottom: keyboardVisible ? 20 : 16,
+          }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <YStack padding="$md">
+            <YStack alignItems="center" marginBottom="$lg">
+              <Text fontSize="$2xl" fontWeight="bold" marginBottom="$sm">
+                Welcome Back
+              </Text>
+              <Text fontSize="$md" color="$textMuted">
                 Sign in to continue
               </Text>
-            </View>
+            </YStack>
 
-            <WhiteSpace size="xl"/>
+            <YStack space="$xl">
+              <Form
+                initialValues={{ email: '', password: '' }}
+                onSubmit={handleLogin}
+                validate={validateLogin}
+              >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                  }) => (
+                  <YStack space="$lg">
+                    <FormField
+                      name="email"
+                      label="Email"
+                      value={values.email}
+                      onChange={(value) => handleChange('email', value)}
+                      onBlur={() => handleBlur('email')}
+                      placeholder="Enter your email"
+                      error={errors.email}
+                      touched={touched.email}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      required
+                    />
 
-            <Form
-              initialValues={{email: '', password: ''}}
-              onSubmit={handleLogin}
-              validate={validateLogin}>
-              {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
-                <View style={styles.formContainer}>
-                  <FormField
-                    name="email"
-                    label="Email"
-                    value={values.email}
-                    onChange={(value) => handleChange('email', value)}
-                    onBlur={() => handleBlur('email')}
-                    placeholder="Enter your email"
-                    error={errors.email}
-                    touched={touched.email}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    required
-                  />
+                    <FormField
+                      name="password"
+                      label="Password"
+                      value={values.password}
+                      onChange={(value) => handleChange('password', value)}
+                      onBlur={() => handleBlur('password')}
+                      placeholder="Enter your password"
+                      error={errors.password}
+                      touched={touched.password}
+                      secureTextEntry
+                      required
+                    />
 
-                  <WhiteSpace size="lg"/>
+                    <Button
+                      variant="primary"
+                      disabled={isSubmitting || loginApi.loading || isLoading}
+                      loading={isSubmitting || loginApi.loading || isLoading}
+                      onPress={() => handleSubmit()}
+                      fullWidth
+                    >
+                      Login
+                    </Button>
+                  </YStack>
+                )}
+              </Form>
 
-                  <FormField
-                    name="password"
-                    label="Password"
-                    value={values.password}
-                    onChange={(value) => handleChange('password', value)}
-                    onBlur={() => handleBlur('password')}
-                    placeholder="Enter your password"
-                    error={errors.password}
-                    touched={touched.password}
-                    secureTextEntry
-                    required
-                  />
-
-                  <WhiteSpace size="xl"/>
-
-                  <Button
-                    type="primary"
-                    loading={isSubmitting || loginApi.loading || isLoading}
-                    disabled={isSubmitting || loginApi.loading || isLoading}
-                    onPress={handleSubmit}
-                  >
-                    Login
-                  </Button>
-
-                  <WhiteSpace size="lg"/>
-
-                  <View style={styles.registerContainer}>
-                    <Text style={{color: antColors.color_text_secondary}}>Don't have an account? </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                      <Text style={[styles.registerText, {color: antColors.brand_primary}]}>
-                        Register now
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-            </Form>
-          </WingBlank>
+              <XStack justifyContent="center" alignItems="center">
+                <Text color="$textMuted">Don't have an account? </Text>
+                <Text
+                  color="$primary"
+                  fontWeight="bold"
+                  onPress={() => navigation.navigate('Register')}
+                  pressStyle={{ opacity: 0.7 }}
+                >
+                  Register now
+                </Text>
+              </XStack>
+            </YStack>
+          </YStack>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  keyboardView: {
-    flex: 1,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  headerContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-  },
-  formContainer: {
-    marginTop: 20,
-  },
-  registerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 16,
-  },
-  registerText: {
-    fontWeight: 'bold',
-  },
-});
 
 export default LoginScreen;
