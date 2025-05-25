@@ -1,5 +1,6 @@
 // metro.config.js
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+const path = require('path');
 
 /**
  * Metro configuration
@@ -8,11 +9,33 @@ const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 const config = {
-    transformer: {
-        // We don't need the special transformer since we're not doing static extraction yet
-        // This simplifies the setup for now
-        // babelTransformerPath: require.resolve('react-native-tamagui-transformer'),
+    resolver: {
+        alias: {
+            // Ensure Tamagui resolves correctly
+            'react-native-svg': require.resolve('react-native-svg'),
+        },
+        // Add support for more file extensions
+        sourceExts: ['js', 'jsx', 'ts', 'tsx', 'json', 'cjs', 'mjs'],
     },
+    transformer: {
+        // Improve performance for Tamagui
+        getTransformOptions: async () => ({
+            transform: {
+                experimentalImportSupport: false,
+                inlineRequires: true,
+            },
+        }),
+        // Add minification options
+        minifierConfig: {
+            mangle: {
+                keep_fnames: true,
+            },
+        },
+    },
+    watchFolders: [
+        // Add node_modules to watch folders for better HMR
+        path.resolve(__dirname, 'node_modules'),
+    ],
 };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);

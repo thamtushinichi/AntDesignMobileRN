@@ -48,6 +48,27 @@ type CardProps = React.ComponentProps<typeof StyledCard> & {
   footer?: ReactNode;
 };
 
+// Card Header Component
+const CardHeader = ({ children }: { children: ReactNode }) => (
+  <YStack paddingBottom="$sm" borderBottomWidth={1} borderBottomColor="$borderColor" marginBottom="$sm">
+    {children}
+  </YStack>
+);
+
+// Card Body Component
+const CardBody = ({ children }: { children: ReactNode }) => (
+  <YStack>
+    {children}
+  </YStack>
+);
+
+// Card Footer Component
+const CardFooter = ({ children }: { children: ReactNode }) => (
+  <YStack paddingTop="$sm" borderTopWidth={1} borderTopColor="$borderColor" marginTop="$sm">
+    {children}
+  </YStack>
+);
+
 const Card = ({
                 title,
                 subtitle,
@@ -65,37 +86,44 @@ const Card = ({
     >
       <YStack space="$sm">
         {hasHeader && (
-          <XStack justifyContent="space-between" alignItems="center">
-            <YStack>
-              {title && (
-                <Text fontSize="$lg" fontWeight="bold" color="$color">
-                  {title}
-                </Text>
+          <CardHeader>
+            <XStack justifyContent="space-between" alignItems="center">
+              <YStack>
+                {title && (
+                  <Text fontSize="$lg" fontWeight="bold" color="$color">
+                    {title}
+                  </Text>
+                )}
+                {subtitle && (
+                  <Text fontSize="$sm" color="$textMuted">
+                    {subtitle}
+                  </Text>
+                )}
+              </YStack>
+              {extra && (
+                <XStack>{extra}</XStack>
               )}
-              {subtitle && (
-                <Text fontSize="$sm" color="$textMuted">
-                  {subtitle}
-                </Text>
-              )}
-            </YStack>
-            {extra && (
-              <XStack>{extra}</XStack>
-            )}
-          </XStack>
+            </XStack>
+          </CardHeader>
         )}
 
-        <YStack>
+        <CardBody>
           {children}
-        </YStack>
+        </CardBody>
 
         {footer && (
-          <XStack mt="$sm">
+          <CardFooter>
             {footer}
-          </XStack>
+          </CardFooter>
         )}
       </YStack>
     </StyledCard>
   );
 };
+
+// Attach subcomponents
+Card.Header = CardHeader;
+Card.Body = CardBody;
+Card.Footer = CardFooter;
 
 export default Card;

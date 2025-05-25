@@ -9,6 +9,10 @@ module.exports = {
         importsWhitelist: ['constants.js', 'colors.js'],
         logTimings: true,
         disableExtraction: process.env.NODE_ENV === 'development',
+        // Add these to reduce warnings
+        excludeReactNativeWebExports: ['VirtualizedList', 'StatusBar', 'Text', 'Image'],
+        // Disable optimization for some problematic modules
+        disableAutoloadOnPlatform: true,
       },
     ],
     [

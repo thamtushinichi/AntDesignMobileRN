@@ -144,7 +144,7 @@ const tamaguiConfig = createTamagui({
 export type AppConfig = typeof tamaguiConfig
 export default tamaguiConfig
 
-// Export the Theme type
+// Fix the theme type declaration
 declare module 'tamagui' {
-  interface ThemeTokens extends AppConfig['themes']['light'] {}
+  interface TamaguiCustomConfig extends AppConfig {}
 }
