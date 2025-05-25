@@ -1,20 +1,25 @@
 // src/config/fonts.ts
 
-// Font family names - React Native sử dụng tên file không có extension
+// Font family mapping for React Native
 export const fontFamily = {
   inter: {
-    light: 'Inter_18pt-Light',
-    regular: 'Inter_18pt-Regular',
-    medium: 'Inter_18pt-Medium',
-    semiBold: 'Inter_18pt-SemiBold',
-    bold: 'Inter_18pt-Bold',
-    extraBold: 'Inter_18pt-ExtraBold',
-    black: 'Inter_18pt-Black',
+    // Sử dụng tên file chính xác từ Inter font
+    thin: 'Inter-Thin',
+    extraLight: 'Inter-ExtraLight',
+    light: 'Inter-Light',
+    regular: 'Inter-Regular',
+    medium: 'Inter-Medium',
+    semiBold: 'Inter-SemiBold',
+    bold: 'Inter-Bold',
+    extraBold: 'Inter-ExtraBold',
+    black: 'Inter-Black',
   },
 };
 
-// Font weights mapping
+// Font weights mapping với tên file thực tế
 export const fontWeights = {
+  100: fontFamily.inter.thin,
+  200: fontFamily.inter.extraLight,
   300: fontFamily.inter.light,
   400: fontFamily.inter.regular,
   500: fontFamily.inter.medium,
@@ -24,7 +29,20 @@ export const fontWeights = {
   900: fontFamily.inter.black,
 } as const;
 
-// Helper function to get font family by weight
+// Helper function để get font family theo weight
 export const getFontFamily = (weight: keyof typeof fontWeights = 400) => {
   return fontWeights[weight] || fontFamily.inter.regular;
+};
+
+// Export cho Tamagui config
+export const interFontFaces = {
+  100: { normal: fontFamily.inter.thin },
+  200: { normal: fontFamily.inter.extraLight },
+  300: { normal: fontFamily.inter.light },
+  400: { normal: fontFamily.inter.regular },
+  500: { normal: fontFamily.inter.medium },
+  600: { normal: fontFamily.inter.semiBold },
+  700: { normal: fontFamily.inter.bold },
+  800: { normal: fontFamily.inter.extraBold },
+  900: { normal: fontFamily.inter.black },
 };

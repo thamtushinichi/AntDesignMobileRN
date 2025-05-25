@@ -9,6 +9,7 @@ import TodoExample from '../../components/examples/TodoExample';
 import ThemeExampleComponent from '../../components/common/ThemeExampleComponent';
 import ModalExample from '../../components/examples/ModalExample';
 import ComponentsExample from '../../components/examples/ComponentsExample';
+import FontTest from '../../components/FontTest.tsx';
 
 const HomeScreen: React.FC = () => {
   const isDarkMode = useThemeStore(selectIsDarkMode);
