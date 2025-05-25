@@ -1,21 +1,27 @@
 // src/components/examples/TamaguiShowcase.tsx - Fixed Version
 import React, { useState } from 'react';
-import { Button } from '../../components/ui';
+import {
+  Button,
+  Card,
+  Input,
+  List,
+  Switch,
+  Modal,
+  Avatar,
+  Badge,
+  Checkbox,
+} from '../../components/ui';
 import {
   YStack,
   XStack,
   Text,
   styled,
-  Switch,
   Slider,
   Progress,
-  Input,
   TextArea,
   Circle,
   Square,
-  Card,
   Separator,
-  Avatar,
   H1,
   H2,
   H3,
