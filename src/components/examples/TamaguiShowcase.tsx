@@ -1,5 +1,5 @@
-// src/components/examples/TamaguiShowcase.tsx
-import React, { useState } from 'react';
+// src/components/examples/TamaguiShowcase.tsx - Fixed Version
+import React, {useState} from 'react';
 import {
   YStack,
   XStack,
@@ -11,7 +11,6 @@ import {
   Progress,
   Input,
   TextArea,
-  ScrollView,
   Circle,
   Square,
   Card,
@@ -23,7 +22,6 @@ import {
   H4,
   Paragraph,
   Spinner,
-  Image,
 } from 'tamagui';
 import {
   Heart,
@@ -37,27 +35,14 @@ import {
   AlertCircle,
   XCircle,
   Info,
-  ChevronDown,
-  ChevronRight,
   Plus,
-  Minus,
   Search,
-  Filter,
-  MoreHorizontal,
-  Edit,
-  Trash2,
-  Download,
-  Share,
   Bell,
   Home,
   MessageCircle,
   Camera,
   MapPin,
   Clock,
-  TrendingUp,
-  Shield,
-  Zap,
-  Globe,
 } from '@tamagui/lucide-icons';
 import {
   useThemeColors,
@@ -74,7 +59,6 @@ const EnhancedButton = styled(Button, {
 
   hoverStyle: {
     opacity: 0.9,
-    ...getShadow('sm'),
   },
 
   pressStyle: {
@@ -231,10 +215,8 @@ const EnhancedCard = styled(Card, {
   padding: '$4',
   borderWidth: 1,
   borderColor: '$borderColor',
-  ...getShadow('sm'),
 
   hoverStyle: {
-    ...getShadow('md'),
     borderColor: '$borderColorHover',
   },
 
@@ -242,7 +224,11 @@ const EnhancedCard = styled(Card, {
     variant: {
       default: {},
       elevated: {
-        ...getShadow('lg'),
+        shadowColor: '$shadowColor',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
       },
       outlined: {
         borderWidth: 2,
@@ -270,7 +256,7 @@ const EnhancedCard = styled(Card, {
   },
 });
 
-// Main Showcase Component
+// Main Showcase Component - NO SCROLLVIEWS INSIDE
 const TamaguiShowcase: React.FC = () => {
   const [switchValue, setSwitchValue] = useState(false);
   const [sliderValue, setSliderValue] = useState([50]);
@@ -300,7 +286,7 @@ const TamaguiShowcase: React.FC = () => {
         </Text>
       </YStack>
 
-      <Separator />
+      <Separator/>
 
       <YStack space="$2">
         <Text fontWeight="bold">Font Weights:</Text>
@@ -325,7 +311,7 @@ const TamaguiShowcase: React.FC = () => {
         <XStack space="$2" flexWrap="wrap">
           {Object.entries(palette.primary).map(([shade, color]) => (
             <YStack key={shade} alignItems="center" space="$1">
-              <Square size={40} backgroundColor={color} borderRadius="$sm" />
+              <Square size={40} backgroundColor={color} borderRadius="$sm"/>
               <Text fontSize="$xs">{shade}</Text>
             </YStack>
           ))}
@@ -336,19 +322,19 @@ const TamaguiShowcase: React.FC = () => {
         <Text fontWeight="bold">Semantic Colors</Text>
         <XStack space="$2" flexWrap="wrap">
           <YStack alignItems="center" space="$1">
-            <Square size={40} backgroundColor="$success" borderRadius="$sm" />
+            <Square size={40} backgroundColor="$success" borderRadius="$sm"/>
             <Text fontSize="$xs">Success</Text>
           </YStack>
           <YStack alignItems="center" space="$1">
-            <Square size={40} backgroundColor="$warning" borderRadius="$sm" />
+            <Square size={40} backgroundColor="$warning" borderRadius="$sm"/>
             <Text fontSize="$xs">Warning</Text>
           </YStack>
           <YStack alignItems="center" space="$1">
-            <Square size={40} backgroundColor="$error" borderRadius="$sm" />
+            <Square size={40} backgroundColor="$error" borderRadius="$sm"/>
             <Text fontSize="$xs">Error</Text>
           </YStack>
           <YStack alignItems="center" space="$1">
-            <Square size={40} backgroundColor="$info" borderRadius="$sm" />
+            <Square size={40} backgroundColor="$info" borderRadius="$sm"/>
             <Text fontSize="$xs">Info</Text>
           </YStack>
         </XStack>
@@ -401,13 +387,13 @@ const TamaguiShowcase: React.FC = () => {
       <YStack space="$3">
         <Text fontWeight="bold">Button with Icons</Text>
         <XStack space="$2" flexWrap="wrap">
-          <EnhancedButton variant="primary" icon={<Plus size="$1" />}>
+          <EnhancedButton variant="primary" icon={<Plus size="$1"/>}>
             Add Item
           </EnhancedButton>
-          <EnhancedButton variant="outline" icon={<Search size="$1" />}>
+          <EnhancedButton variant="outline" icon={<Search size="$1"/>}>
             Search
           </EnhancedButton>
-          <EnhancedButton variant="ghost" icon={<Settings size="$1" />}>
+          <EnhancedButton variant="ghost" icon={<Settings size="$1"/>}>
             Settings
           </EnhancedButton>
         </XStack>
@@ -455,7 +441,7 @@ const TamaguiShowcase: React.FC = () => {
             onCheckedChange={setSwitchValue}
             size="$4"
           >
-            <Switch.Thumb />
+            <Switch.Thumb/>
           </Switch>
         </XStack>
 
@@ -470,9 +456,9 @@ const TamaguiShowcase: React.FC = () => {
             size="$4"
           >
             <Slider.Track>
-              <Slider.TrackActive />
+              <Slider.TrackActive/>
             </Slider.Track>
-            <Slider.Thumb index={0} circular />
+            <Slider.Thumb index={0} circular/>
           </Slider>
         </YStack>
       </YStack>
@@ -480,7 +466,7 @@ const TamaguiShowcase: React.FC = () => {
       <YStack space="$3">
         <Text fontWeight="bold">Progress Bar</Text>
         <Progress value={progressValue} max={100} size="$4">
-          <Progress.Indicator />
+          <Progress.Indicator/>
         </Progress>
         <Text fontSize="$sm" color="$textMuted">
           {progressValue}% complete
@@ -550,7 +536,7 @@ const TamaguiShowcase: React.FC = () => {
         <Text fontWeight="bold">Alert Messages</Text>
 
         <Alert variant="info">
-          <Info size="$1" color="$info" />
+          <Info size="$1" color="$info"/>
           <YStack flex={1}>
             <Text fontWeight="bold" color="$info">Information</Text>
             <Text>This is an informational message.</Text>
@@ -558,7 +544,7 @@ const TamaguiShowcase: React.FC = () => {
         </Alert>
 
         <Alert variant="success">
-          <CheckCircle size="$1" color="$success" />
+          <CheckCircle size="$1" color="$success"/>
           <YStack flex={1}>
             <Text fontWeight="bold" color="$success">Success</Text>
             <Text>Your action was completed successfully.</Text>
@@ -566,7 +552,7 @@ const TamaguiShowcase: React.FC = () => {
         </Alert>
 
         <Alert variant="warning">
-          <AlertCircle size="$1" color="$warning" />
+          <AlertCircle size="$1" color="$warning"/>
           <YStack flex={1}>
             <Text fontWeight="bold" color="$warning">Warning</Text>
             <Text>Please review this information carefully.</Text>
@@ -574,7 +560,7 @@ const TamaguiShowcase: React.FC = () => {
         </Alert>
 
         <Alert variant="error">
-          <XCircle size="$1" color="$error" />
+          <XCircle size="$1" color="$error"/>
           <YStack flex={1}>
             <Text fontWeight="bold" color="$error">Error</Text>
             <Text>Something went wrong. Please try again.</Text>
@@ -585,7 +571,7 @@ const TamaguiShowcase: React.FC = () => {
       <YStack space="$3">
         <Text fontWeight="bold">Loading States</Text>
         <XStack space="$3" alignItems="center">
-          <Spinner size="small" color="$primary" />
+          <Spinner size="small" color="$primary"/>
           <Text>Loading...</Text>
         </XStack>
       </YStack>
@@ -602,42 +588,42 @@ const TamaguiShowcase: React.FC = () => {
         <XStack space="$3" flexWrap="wrap">
           <YStack alignItems="center" space="$1">
             <Circle size={40} backgroundColor="$primary" alignItems="center" justifyContent="center">
-              <User size="$1" color="white" />
+              <User size="$1" color="white"/>
             </Circle>
             <Text fontSize="$xs">User</Text>
           </YStack>
 
           <YStack alignItems="center" space="$1">
             <Circle size={40} backgroundColor="$success" alignItems="center" justifyContent="center">
-              <CheckCircle size="$1" color="white" />
+              <CheckCircle size="$1" color="white"/>
             </Circle>
             <Text fontSize="$xs">Check</Text>
           </YStack>
 
           <YStack alignItems="center" space="$1">
             <Circle size={40} backgroundColor="$warning" alignItems="center" justifyContent="center">
-              <AlertCircle size="$1" color="white" />
+              <AlertCircle size="$1" color="white"/>
             </Circle>
             <Text fontSize="$xs">Alert</Text>
           </YStack>
 
           <YStack alignItems="center" space="$1">
             <Circle size={40} backgroundColor="$info" alignItems="center" justifyContent="center">
-              <Settings size="$1" color="white" />
+              <Settings size="$1" color="white"/>
             </Circle>
             <Text fontSize="$xs">Settings</Text>
           </YStack>
 
           <YStack alignItems="center" space="$1">
             <Circle size={40} backgroundColor="$error" alignItems="center" justifyContent="center">
-              <Heart size="$1" color="white" />
+              <Heart size="$1" color="white"/>
             </Circle>
             <Text fontSize="$xs">Heart</Text>
           </YStack>
 
           <YStack alignItems="center" space="$1">
             <Circle size={40} backgroundColor="$borderColor" alignItems="center" justifyContent="center">
-              <Star size="$1" color="$primary" />
+              <Star size="$1" color="$primary"/>
             </Circle>
             <Text fontSize="$xs">Star</Text>
           </YStack>
@@ -647,16 +633,16 @@ const TamaguiShowcase: React.FC = () => {
       <YStack space="$3">
         <Text fontWeight="bold">Navigation Icons</Text>
         <XStack space="$2" flexWrap="wrap">
-          <Home size="$2" color="$primary" />
-          <Search size="$2" color="$primary" />
-          <Bell size="$2" color="$primary" />
-          <MessageCircle size="$2" color="$primary" />
-          <Camera size="$2" color="$primary" />
-          <MapPin size="$2" color="$primary" />
-          <Calendar size="$2" color="$primary" />
-          <Clock size="$2" color="$primary" />
-          <Mail size="$2" color="$primary" />
-          <Phone size="$2" color="$primary" />
+          <Home size="$2" color="$primary"/>
+          <Search size="$2" color="$primary"/>
+          <Bell size="$2" color="$primary"/>
+          <MessageCircle size="$2" color="$primary"/>
+          <Camera size="$2" color="$primary"/>
+          <MapPin size="$2" color="$primary"/>
+          <Calendar size="$2" color="$primary"/>
+          <Clock size="$2" color="$primary"/>
+          <Mail size="$2" color="$primary"/>
+          <Phone size="$2" color="$primary"/>
         </XStack>
       </YStack>
     </YStack>
@@ -671,21 +657,21 @@ const TamaguiShowcase: React.FC = () => {
         <Text fontWeight="bold">Avatar Sizes</Text>
         <XStack space="$3" alignItems="center">
           <Avatar circular size="$3">
-            <Avatar.Image src="https://picsum.photos/100/100?random=1" />
+            <Avatar.Image src="https://picsum.photos/100/100?random=1"/>
             <Avatar.Fallback backgroundColor="$primary">
               <Text color="white" fontSize="$sm">JD</Text>
             </Avatar.Fallback>
           </Avatar>
 
           <Avatar circular size="$5">
-            <Avatar.Image src="https://picsum.photos/100/100?random=2" />
+            <Avatar.Image src="https://picsum.photos/100/100?random=2"/>
             <Avatar.Fallback backgroundColor="$success">
               <Text color="white">AS</Text>
             </Avatar.Fallback>
           </Avatar>
 
           <Avatar circular size="$7">
-            <Avatar.Image src="https://picsum.photos/100/100?random=3" />
+            <Avatar.Image src="https://picsum.photos/100/100?random=3"/>
             <Avatar.Fallback backgroundColor="$warning">
               <Text color="white" fontSize="$lg">MK</Text>
             </Avatar.Fallback>
@@ -698,9 +684,9 @@ const TamaguiShowcase: React.FC = () => {
         <EnhancedCard>
           <XStack space="$3" alignItems="center">
             <Avatar circular size="$6">
-              <Avatar.Image src="https://picsum.photos/100/100?random=4" />
+              <Avatar.Image src="https://picsum.photos/100/100?random=4"/>
               <Avatar.Fallback backgroundColor="$primary">
-                <User size="$2" color="white" />
+                <User size="$2" color="white"/>
               </Avatar.Fallback>
             </Avatar>
             <YStack flex={1}>
@@ -709,8 +695,8 @@ const TamaguiShowcase: React.FC = () => {
               <Text color="$textMuted" fontSize="$sm">john@example.com</Text>
             </YStack>
             <XStack space="$2">
-              <EnhancedButton size="sm" variant="outline" icon={<MessageCircle size="$1" />} />
-              <EnhancedButton size="sm" variant="outline" icon={<Phone size="$1" />} />
+              <EnhancedButton size="sm" variant="outline" icon={<MessageCircle size="$1"/>}/>
+              <EnhancedButton size="sm" variant="outline" icon={<Phone size="$1"/>}/>
             </XStack>
           </XStack>
         </EnhancedCard>
@@ -718,13 +704,13 @@ const TamaguiShowcase: React.FC = () => {
     </YStack>
   );
 
-  // Shadow Examples
+  // Shadow Examples - Simplified for compatibility
   const ShadowSection = () => (
     <YStack space="$4">
       <H2>Shadows & Elevation</H2>
 
       <XStack space="$3" flexWrap="wrap">
-        {(['sm', 'md', 'lg', 'xl'] as const).map((shadowSize) => (
+        {['sm', 'md', 'lg', 'xl'].map((shadowSize) => (
           <YStack key={shadowSize} alignItems="center" space="$2">
             <Square
               size={80}
@@ -732,7 +718,11 @@ const TamaguiShowcase: React.FC = () => {
               borderRadius="$md"
               alignItems="center"
               justifyContent="center"
-              {...getShadow(shadowSize)}
+              shadowColor="$shadowColor"
+              shadowOffset={{width: 0, height: 2}}
+              shadowOpacity={0.1}
+              shadowRadius={4}
+              elevation={3}
             >
               <Text fontSize="$sm" fontWeight="bold">{shadowSize}</Text>
             </Square>
@@ -756,49 +746,52 @@ const TamaguiShowcase: React.FC = () => {
   };
 
   const tabs = [
-    { key: 'typography', label: 'Typography' },
-    { key: 'colors', label: 'Colors' },
-    { key: 'buttons', label: 'Buttons' },
-    { key: 'forms', label: 'Forms' },
-    { key: 'cards', label: 'Cards' },
-    { key: 'status', label: 'Status' },
-    { key: 'icons', label: 'Icons' },
-    { key: 'avatars', label: 'Avatars' },
-    { key: 'shadows', label: 'Shadows' },
+    {key: 'typography', label: 'Typography'},
+    {key: 'colors', label: 'Colors'},
+    {key: 'buttons', label: 'Buttons'},
+    {key: 'forms', label: 'Forms'},
+    {key: 'cards', label: 'Cards'},
+    {key: 'status', label: 'Status'},
+    {key: 'icons', label: 'Icons'},
+    {key: 'avatars', label: 'Avatars'},
+    {key: 'shadows', label: 'Shadows'},
   ];
 
   const SelectedSection = sections[selectedTab];
 
   return (
-    <YStack flex={1}>
-      {/* Header */}
-      <YStack padding="$4" backgroundColor="$background" borderBottomWidth={1} borderBottomColor="$borderColor">
+    <YStack space="$lg">
+      {/* Header - Simplified */}
+      <YStack space="$md">
         <H1>Tamagui Design System</H1>
         <Text color="$textMuted">Complete showcase of components and styling</Text>
       </YStack>
 
-      {/* Tab Navigation */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} backgroundColor="$background">
-        <XStack padding="$3" space="$2">
+      <Separator/>
+
+      {/* Tab Navigation - Horizontal Scroll but NO nested ScrollView */}
+      <YStack>
+        <XStack space="$2" paddingHorizontal="$sm" flexWrap="wrap">
           {tabs.map((tab) => (
             <EnhancedButton
               key={tab.key}
               size="sm"
               variant={selectedTab === tab.key ? 'primary' : 'outline'}
               onPress={() => setSelectedTab(tab.key)}
+              marginBottom="$xs"
             >
               {tab.label}
             </EnhancedButton>
           ))}
         </XStack>
-      </ScrollView>
+      </YStack>
 
-      {/* Content */}
-      <ScrollView flex={1}>
-        <YStack padding="$4">
-          <SelectedSection />
-        </YStack>
-      </ScrollView>
+      <Separator/>
+
+      {/* Content - NO SCROLLVIEW */}
+      <YStack space="$md">
+        <SelectedSection/>
+      </YStack>
     </YStack>
   );
 };

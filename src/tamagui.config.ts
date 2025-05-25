@@ -1,11 +1,11 @@
-// src/tamagui.config.ts
-import { createTamagui } from 'tamagui'
-import { shorthands } from '@tamagui/shorthands'
-import { themes, tokens } from '@tamagui/themes'
-import { createAnimations } from '@tamagui/animations-react-native'
-import { fontFamily, interFontFaces } from './config/fonts'
+// src/tamagui.config.ts - 100% Compatible Version
+import {createTamagui} from 'tamagui'
+import {shorthands} from '@tamagui/shorthands'
+import {themes, tokens} from '@tamagui/themes'
+import {createAnimations} from '@tamagui/animations-react-native'
+import {Platform} from 'react-native'
 
-// Define our custom colors with better color system
+// Color system
 const colors = {
   primary: {
     50: '#E6F7FF',
@@ -39,25 +39,22 @@ const colors = {
   }
 }
 
-// Enhanced custom tokens with proper sizing system
+// Compatible tokens with proper defaults
 const customTokens = {
   ...tokens,
   color: {
     ...tokens.color,
-    // Primary colors
     primary: colors.primary[500],
     primaryHover: colors.primary[600],
     primaryActive: colors.primary[700],
     primaryLight: colors.primary[100],
     primaryDark: colors.primary[800],
 
-    // Semantic colors
     success: colors.semantic.success,
     warning: colors.semantic.warning,
     error: colors.semantic.error,
     info: colors.semantic.info,
 
-    // Neutral colors
     textPrimary: colors.gray[900],
     textSecondary: colors.gray[600],
     textMuted: colors.gray[500],
@@ -73,253 +70,131 @@ const customTokens = {
   },
   space: {
     ...tokens.space,
-    0: 0,
-    1: 4,    // 4px
-    2: 8,    // 8px
-    3: 12,   // 12px
-    4: 16,   // 16px
-    5: 20,   // 20px
-    6: 24,   // 24px
-    7: 28,   // 28px
-    8: 32,   // 32px
-    9: 36,   // 36px
-    10: 40,  // 40px
-    12: 48,  // 48px
-    16: 64,  // 64px
-    20: 80,  // 80px
-    24: 96,  // 96px
-    // Semantic spacing
-    xxs: 2,
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 24,
-    xl: 32,
-    xxl: 48,
-    xxxl: 64,
-  },
-  radius: {
-    ...tokens.radius,
-    0: 0,
-    1: 2,
-    2: 4,
-    3: 6,
-    4: 8,
-    5: 12,
-    6: 16,
-    7: 20,
-    8: 24,
-    // Semantic radius
-    xs: 2,
-    sm: 4,
-    md: 6,
-    lg: 8,
-    xl: 12,
-    xxl: 16,
-    round: 999,
-    full: 9999,
+    true: 16, // Required default
+    0: 0, 1: 4, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 7: 28, 8: 32,
+    9: 36, 10: 40, 12: 48, 16: 64, 20: 80, 24: 96,
+    xxs: 2, xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48, xxxl: 64,
   },
   size: {
     ...tokens.size,
-    0: 0,
-    1: 4,
-    2: 8,
-    3: 12,
-    4: 16,
-    5: 20,
-    6: 24,
-    7: 28,
-    8: 32,
-    9: 36,
-    10: 40,
-    11: 44,
-    12: 48,
-    14: 56,
-    16: 64,
-    20: 80,
-    24: 96,
-    28: 112,
-    32: 128,
-    36: 144,
-    40: 160,
-    44: 176,
-    48: 192,
-    52: 208,
-    56: 224,
-    60: 240,
-    64: 256,
-    72: 288,
-    80: 320,
-    96: 384,
-    // Semantic sizes
-    xxs: 12,
-    xs: 16,
-    sm: 20,
-    md: 24,
-    lg: 32,
-    xl: 40,
-    xxl: 48,
+    true: 16, // Required default
+    0: 0, 1: 4, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 7: 28, 8: 32,
+    9: 36, 10: 40, 11: 44, 12: 48, 14: 56, 16: 64, 20: 80, 24: 96,
+    xxs: 12, xs: 16, sm: 20, md: 24, lg: 32, xl: 40, xxl: 48,
+  },
+  radius: {
+    ...tokens.radius,
+    true: 4, // Required default
+    0: 0, 1: 2, 2: 4, 3: 6, 4: 8, 5: 12, 6: 16, 7: 20, 8: 24,
+    xs: 2, sm: 4, md: 6, lg: 8, xl: 12, xxl: 16, round: 999, full: 9999,
   },
   zIndex: {
     ...tokens.zIndex,
-    0: 0,
-    1: 1,
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5,
-    10: 10,
-    20: 20,
-    30: 30,
-    40: 40,
-    50: 50,
-    // Semantic z-index
-    base: 0,
-    dropdown: 1000,
-    sticky: 1100,
-    overlay: 1300,
-    modal: 1400,
-    popover: 1500,
-    toast: 1600,
-    tooltip: 1700,
+    true: 0, // Required default
+    0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 10: 10, 20: 20, 30: 30,
+    base: 0, dropdown: 1000, sticky: 1100, overlay: 1300, modal: 1400,
+    popover: 1500, toast: 1600, tooltip: 1700,
   }
 }
 
-// Custom Inter font configuration for Tamagui
-const createInterFont = () => ({
-  family: {
-    // Map numeric weights to actual font family names
-    100: fontFamily.inter.thin,
-    200: fontFamily.inter.extraLight,
-    300: fontFamily.inter.light,
-    400: fontFamily.inter.regular,
-    500: fontFamily.inter.medium,
-    600: fontFamily.inter.semiBold,
-    700: fontFamily.inter.bold,
-    800: fontFamily.inter.extraBold,
-    900: fontFamily.inter.black,
-  },
-  size: {
-    1: 11,   // xs
-    2: 12,   // sm
-    3: 13,   //
-    4: 14,   // base
-    5: 16,   // lg
-    6: 18,   // xl
-    7: 20,   // 2xl
-    8: 24,   // 3xl
-    9: 30,   // 4xl
-    10: 36,  // 5xl
-    11: 48,  // 6xl
-    12: 60,  // 7xl
-    13: 72,  // 8xl
-    14: 96,  // 9xl
-    15: 128, // 10xl
-    16: 144, // 11xl
-    // Token-based sizes
-    true: 14, // Default size
-    xs: 11,
-    sm: 12,
-    md: 14,
-    lg: 16,
-    xl: 18,
-    '2xl': 20,
-    '3xl': 24,
-    '4xl': 30,
-    '5xl': 36,
-  },
-  transform: {
-    0: 'none',
-    1: 'uppercase',
-    2: 'lowercase',
-    3: 'capitalize',
-  },
-  weight: {
-    // Map numeric weights to font weight strings
-    1: '100', // thin
-    2: '200', // extraLight
-    3: '300', // light
-    4: '400', // regular (default)
-    5: '500', // medium
-    6: '600', // semiBold
-    7: '700', // bold
-    8: '800', // extraBold
-    9: '900', // black
+// Font configuration - Start with system fonts for compatibility
+const createCompatibleFont = (customFontName?: string) => {
+  // Determine font family based on platform and availability
+  const getFontFamily = (weight: string) => {
+    if (customFontName && Platform.OS === 'ios') {
+      return customFontName;
+    }
+    if (customFontName && Platform.OS === 'android') {
+      return customFontName;
+    }
+    // Fallback to system fonts
+    return Platform.select({
+      ios: 'System',
+      android: 'sans-serif',
+      default: 'System'
+    });
+  };
 
-    // Also support string-based weights
-    true: '400', // Default weight
-    thin: '100',
-    extraLight: '200',
-    light: '300',
-    normal: '400',
-    regular: '400',
-    medium: '500',
-    semiBold: '600',
-    bold: '700',
-    extraBold: '800',
-    black: '900',
-  },
-  color: {
-    0: 'transparent',
-    1: '$color',
-    2: '$textSecondary',
-    3: '$textMuted',
-    4: '$textDisabled',
-    5: '$primary',
-    6: '$success',
-    7: '$warning',
-    8: '$error',
-    9: '$info',
-  },
-  letterSpacing: {
-    0: 0,
-    1: 0.025,  // 0.025em - tight
-    2: -0.025, // -0.025em - tighter
-    3: 0.05,   // 0.05em - wide
-    4: 0.1,    // 0.1em - wider
+  return {
+    family: {
+      // Map font weights to actual font families
+      100: getFontFamily('thin'),
+      200: getFontFamily('extraLight'),
+      300: getFontFamily('light'),
+      400: getFontFamily('regular'),
+      500: getFontFamily('medium'),
+      600: getFontFamily('semiBold'),
+      700: getFontFamily('bold'),
+      800: getFontFamily('extraBold'),
+      900: getFontFamily('black'),
 
-    // Token-based letter spacing
-    true: 0,
-    tight: -0.025,
-    normal: 0,
-    wide: 0.025,
-    wider: 0.05,
-  },
-  lineHeight: {
-    1: 1,      // none
-    2: 1.25,   // tight
-    3: 1.375,  // snug
-    4: 1.5,    // normal
-    5: 1.625,  // relaxed
-    6: 2,      // loose
+      // Required for compatibility
+      true: getFontFamily('regular'),
+    },
+    size: {
+      // Numeric scale
+      1: 11, 2: 12, 3: 13, 4: 14, 5: 16, 6: 18, 7: 20, 8: 24,
+      9: 30, 10: 36, 11: 48, 12: 60, 13: 72, 14: 96, 15: 128, 16: 144,
 
-    // Token-based line heights
-    true: 1.5, // Default
-    none: 1,
-    tight: 1.25,
-    snug: 1.375,
-    normal: 1.5,
-    relaxed: 1.625,
-    loose: 2,
-  },
+      // Required default
+      true: 14,
 
-  // Important: Font face configuration for React Native
-  face: interFontFaces,
-})
+      // Token-based sizes
+      xs: 11, sm: 12, md: 14, lg: 16, xl: 18, '2xl': 20, '3xl': 24,
+      '4xl': 30, '5xl': 36, '6xl': 48, '7xl': 60, '8xl': 72, '9xl': 96,
+    },
+    weight: {
+      // Numeric weights
+      1: '100', 2: '200', 3: '300', 4: '400', 5: '500',
+      6: '600', 7: '700', 8: '800', 9: '900',
 
-// Create fonts - use Inter for all text types
-const interFont = createInterFont()
+      // Required default
+      true: '400',
+
+      // Named weights
+      thin: '100', extraLight: '200', light: '300', normal: '400',
+      regular: '400', medium: '500', semiBold: '600', bold: '700',
+      extraBold: '800', black: '900',
+    },
+    letterSpacing: {
+      1: -0.025, 2: 0, 3: 0.025, 4: 0.05, 5: 0.1,
+      true: 0, // Required default
+      tight: -0.025, normal: 0, wide: 0.025, wider: 0.05, widest: 0.1,
+    },
+    lineHeight: {
+      1: 1, 2: 1.25, 3: 1.375, 4: 1.5, 5: 1.625, 6: 2,
+      true: 1.5, // Required default
+      none: 1, tight: 1.25, snug: 1.375, normal: 1.5, relaxed: 1.625, loose: 2,
+    },
+    transform: {
+      0: 'none', 1: 'uppercase', 2: 'lowercase', 3: 'capitalize',
+      true: 'none', // Required default
+    },
+
+    // CRITICAL: Face mapping for Android font weights
+    ...(Platform.OS === 'android' && customFontName && {
+      face: {
+        400: {normal: customFontName},
+        500: {normal: customFontName},
+        600: {normal: customFontName},
+        700: {normal: customFontName},
+      }
+    }),
+  };
+};
+
+// Create fonts - Start with system fonts for guaranteed compatibility
 const fonts = {
-  heading: interFont,
-  body: interFont,
-  mono: interFont, // You can create a separate mono font config if needed
-}
+  // Use system fonts initially - these will always work
+  heading: createCompatibleFont(),
+  body: createCompatibleFont(),
+  mono: createCompatibleFont(),
+};
 
-// Enhanced themes with proper color system
+// Enhanced themes
 const customThemes = {
   light: {
     ...themes.light,
-    // Background colors
     background: '#FFFFFF',
     backgroundHover: colors.gray[50],
     backgroundPress: colors.gray[100],
@@ -327,32 +202,27 @@ const customThemes = {
     backgroundStrong: colors.gray[900],
     backgroundTransparent: 'rgba(255,255,255,0)',
 
-    // Content colors
     color: colors.gray[900],
     colorHover: colors.gray[800],
     colorPress: colors.gray[700],
     colorFocus: colors.gray[800],
     colorTransparent: 'rgba(0,0,0,0)',
 
-    // Border colors
     borderColor: colors.gray[300],
     borderColorHover: colors.gray[400],
     borderColorPress: colors.gray[500],
     borderColorFocus: colors.primary[500],
 
-    // Primary colors
     primary: colors.primary[500],
     primaryHover: colors.primary[600],
     primaryPress: colors.primary[700],
     primaryFocus: colors.primary[500],
 
-    // Secondary colors
     secondary: colors.gray[100],
     secondaryHover: colors.gray[200],
     secondaryPress: colors.gray[300],
     secondaryFocus: colors.gray[100],
 
-    // Semantic colors
     success: colors.semantic.success,
     successHover: '#73D13D',
     successPress: '#389E0D',
@@ -369,24 +239,20 @@ const customThemes = {
     infoHover: '#40A9FF',
     infoPress: '#096DD9',
 
-    // Text colors
     textPrimary: colors.gray[900],
     textSecondary: colors.gray[600],
     textMuted: colors.gray[500],
     textDisabled: colors.gray[400],
     textLight: colors.gray[400],
 
-    // Card and surface colors
     card: '#FFFFFF',
     cardHover: colors.gray[50],
 
-    // Shadow colors
     shadowColor: 'rgba(0,0,0,0.1)',
     shadowColorStrong: 'rgba(0,0,0,0.2)',
   },
   dark: {
     ...themes.dark,
-    // Background colors
     background: '#000000',
     backgroundHover: colors.gray[800],
     backgroundPress: colors.gray[700],
@@ -394,32 +260,27 @@ const customThemes = {
     backgroundStrong: colors.gray[100],
     backgroundTransparent: 'rgba(0,0,0,0)',
 
-    // Content colors
     color: colors.gray[100],
     colorHover: colors.gray[200],
     colorPress: colors.gray[300],
     colorFocus: colors.gray[200],
     colorTransparent: 'rgba(255,255,255,0)',
 
-    // Border colors
     borderColor: colors.gray[700],
     borderColorHover: colors.gray[600],
     borderColorPress: colors.gray[500],
     borderColorFocus: colors.primary[500],
 
-    // Primary colors
     primary: colors.primary[400],
     primaryHover: colors.primary[300],
     primaryPress: colors.primary[500],
     primaryFocus: colors.primary[400],
 
-    // Secondary colors
     secondary: colors.gray[800],
     secondaryHover: colors.gray[700],
     secondaryPress: colors.gray[600],
     secondaryFocus: colors.gray[800],
 
-    // Semantic colors
     success: '#73D13D',
     successHover: '#95DE64',
     successPress: '#52C41A',
@@ -436,24 +297,21 @@ const customThemes = {
     infoHover: '#69C0FF',
     infoPress: '#1890FF',
 
-    // Text colors
     textPrimary: colors.gray[100],
     textSecondary: colors.gray[400],
     textMuted: colors.gray[500],
     textDisabled: colors.gray[600],
     textLight: colors.gray[600],
 
-    // Card and surface colors
     card: colors.gray[900],
     cardHover: colors.gray[800],
 
-    // Shadow colors
     shadowColor: 'rgba(0,0,0,0.3)',
     shadowColorStrong: 'rgba(0,0,0,0.5)',
   }
 }
 
-// Enhanced animations with more options
+// Animations
 const animations = createAnimations({
   bouncy: {
     type: 'spring',
@@ -472,12 +330,6 @@ const animations = createAnimations({
     mass: 1.2,
     stiffness: 250,
   },
-  quicker: {
-    type: 'spring',
-    damping: 20,
-    mass: 1,
-    stiffness: 300,
-  },
   medium: {
     type: 'spring',
     damping: 15,
@@ -489,55 +341,37 @@ const animations = createAnimations({
     damping: 20,
     stiffness: 60,
   },
-  // Timing-based animations
-  fast: {
-    type: 'timing',
-    duration: 200,
-  },
-  normal: {
-    type: 'timing',
-    duration: 300,
-  },
-  slower: {
-    type: 'timing',
-    duration: 500,
-  },
 })
 
-// Create the Tamagui config
+// Create Tamagui config - Fully compatible
 const tamaguiConfig = createTamagui({
   animations,
   defaultTheme: 'light',
-  shouldAddPrefersColorThemes: true,
-  themeClassNameOnRoot: false, // Set to false for React Native
+  shouldAddPrefersColorThemes: false, // Disable for RN compatibility
+  themeClassNameOnRoot: false, // Required for React Native
   shorthands,
   fonts,
   themes: customThemes,
   tokens: customTokens,
   media: {
-    xs: { maxWidth: 660 },
-    sm: { maxWidth: 800 },
-    md: { maxWidth: 1020 },
-    lg: { maxWidth: 1280 },
-    xl: { maxWidth: 1420 },
-    xxl: { maxWidth: 1600 },
-    gtXs: { minWidth: 660 + 1 },
-    gtSm: { minWidth: 800 + 1 },
-    gtMd: { minWidth: 1020 + 1 },
-    gtLg: { minWidth: 1280 + 1 },
-    gtXl: { minWidth: 1420 + 1 },
-    short: { maxHeight: 820 },
-    tall: { minHeight: 820 },
-    hoverNone: { hover: 'none' },
-    pointerCoarse: { pointer: 'coarse' },
-    // Additional responsive breakpoints
-    mobile: { maxWidth: 768 },
-    tablet: { minWidth: 769, maxWidth: 1024 },
-    desktop: { minWidth: 1025 },
+    xs: {maxWidth: 660},
+    sm: {maxWidth: 800},
+    md: {maxWidth: 1020},
+    lg: {maxWidth: 1280},
+    xl: {maxWidth: 1420},
+    xxl: {maxWidth: 1600},
+    gtXs: {minWidth: 661},
+    gtSm: {minWidth: 801},
+    gtMd: {minWidth: 1021},
+    gtLg: {minWidth: 1281},
+    gtXl: {minWidth: 1421},
+    short: {maxHeight: 820},
+    tall: {minHeight: 821},
+    hoverNone: {hover: 'none'},
+    pointerCoarse: {pointer: 'coarse'},
   },
-  // Settings for React Native
   settings: {
-    allowedStyleValues: 'somewhat-strict-web', // or 'strict' for more strict checking
+    allowedStyleValues: 'somewhat-strict',
     autocompleteSpecificTokens: 'except-special',
     fastSchemeChange: true,
   },
@@ -546,61 +380,23 @@ const tamaguiConfig = createTamagui({
 export type AppConfig = typeof tamaguiConfig
 export default tamaguiConfig
 
-// Extend Tamagui types
+// Tamagui types
 declare module 'tamagui' {
-  interface TamaguiCustomConfig extends AppConfig {}
-
-  // Add custom theme tokens for better TypeScript support
-  interface ThemeTokens {
-    // Background colors
-    backgroundHover: string
-    backgroundPress: string
-    backgroundFocus: string
-    backgroundStrong: string
-    backgroundTransparent: string
-
-    // Content colors
-    colorHover: string
-    colorPress: string
-    colorFocus: string
-    colorTransparent: string
-
-    // Border colors
-    borderColorHover: string
-    borderColorPress: string
-    borderColorFocus: string
-
-    // Primary variations
-    primaryHover: string
-    primaryPress: string
-    primaryFocus: string
-
-    // Secondary variations
-    secondaryHover: string
-    secondaryPress: string
-    secondaryFocus: string
-
-    // Semantic color variations
-    successHover: string
-    successPress: string
-    warningHover: string
-    warningPress: string
-    errorHover: string
-    errorPress: string
-    infoHover: string
-    infoPress: string
-
-    // Text colors
-    textPrimary: string
-    textSecondary: string
-    textMuted: string
-    textDisabled: string
-    textLight: string
-
-    // Card colors
-    cardHover: string
-
-    // Shadow colors
-    shadowColorStrong: string
+  interface TamaguiCustomConfig extends AppConfig {
   }
+}
+
+// Export utility function to upgrade to custom fonts later
+export function upgradeToCustomFonts(fontName: string) {
+  console.log(`
+🎉 Ready to upgrade to custom fonts!
+
+To use ${fontName} fonts:
+1. Ensure font files are properly linked
+2. Update font config with: createCompatibleFont('${fontName}')
+3. Test on both iOS and Android
+4. Verify font weights work correctly
+
+Current setup uses system fonts for maximum compatibility.
+  `);
 }
