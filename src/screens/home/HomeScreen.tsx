@@ -73,6 +73,7 @@ const HomeScreen: React.FC = () => {
               <ModalExample />
             </Tabs.Content>
           </Tabs>
+          <FontTest />
         </YStack>
       </ScrollView>
     </SafeAreaView>
