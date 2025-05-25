@@ -1,6 +1,5 @@
 // src/tamagui.config.ts
 import { createTamagui } from 'tamagui'
-import { createInterFont } from '@tamagui/font-inter'
 import { shorthands } from '@tamagui/shorthands'
 import { themes, tokens } from '@tamagui/themes'
 import { createAnimations } from '@tamagui/animations-react-native'
@@ -10,7 +9,7 @@ const primaryColor = "#0CB5EB"
 const primaryColorDark = "#008FC0"
 const primaryColorLight = "#50D0FF"
 
-// Create custom themes extending Tamagui's base themes
+// Create custom themes
 const customThemes = {
   ...themes,
   light: {
@@ -49,7 +48,7 @@ const customThemes = {
   }
 }
 
-// Customize tokens if needed
+// Custom tokens
 const customTokens = {
   ...tokens,
   space: {
@@ -84,8 +83,67 @@ const customTokens = {
   }
 }
 
-// Setup fonts
+// Create Inter font configuration
+const createInterFont = () => ({
+  family: 'Inter_18pt',
+  size: {
+    1: 12,
+    2: 14,
+    3: 15,
+    4: 16,
+    5: 18,
+    6: 20,
+    7: 24,
+    8: 28,
+    9: 32,
+    10: 44,
+    11: 55,
+    12: 62,
+    13: 72,
+    14: 92,
+    15: 114,
+    16: 134,
+  },
+  transform: {
+    1: 'uppercase',
+    2: 'none',
+  },
+  weight: {
+    1: '300',    // Light
+    2: '400',    // Regular
+    3: '500',    // Medium
+    4: '600',    // SemiBold
+    5: '700',    // Bold
+    6: '800',    // ExtraBold
+    7: '900',    // Black
+  },
+  color: {
+    1: '$color',
+    2: '$textMuted',
+  },
+  letterSpacing: {
+    1: 0,
+    2: -0.5,
+  },
+  lineHeight: {
+    1: 1.2,
+    2: 1.4,
+    3: 1.6,
+  },
+  // Map font weights to actual font files
+  face: {
+    300: { normal: 'Inter_18pt-Light' },
+    400: { normal: 'Inter_18pt-Regular' },
+    500: { normal: 'Inter_18pt-Medium' },
+    600: { normal: 'Inter_18pt-SemiBold' },
+    700: { normal: 'Inter_18pt-Bold' },
+    800: { normal: 'Inter_18pt-ExtraBold' },
+    900: { normal: 'Inter_18pt-Black' },
+  },
+})
+
 const interFont = createInterFont()
+
 const fonts = {
   heading: interFont,
   body: interFont,
@@ -109,7 +167,13 @@ const animations = createAnimations({
     type: 'spring',
     damping: 20,
     stiffness: 60,
-  }
+  },
+  quick: {
+    type: 'spring',
+    damping: 20,
+    mass: 1.2,
+    stiffness: 250,
+  },
 })
 
 // Create the Tamagui config
@@ -140,11 +204,9 @@ const tamaguiConfig = createTamagui({
   },
 })
 
-// Export the config and types
 export type AppConfig = typeof tamaguiConfig
 export default tamaguiConfig
 
-// Fix the theme type declaration
 declare module 'tamagui' {
   interface TamaguiCustomConfig extends AppConfig {}
 }

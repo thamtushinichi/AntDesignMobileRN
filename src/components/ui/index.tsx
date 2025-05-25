@@ -24,5 +24,5 @@ export {
   TabBar,
   ToastProvider,
   useToast,
-  toastService
+  toastService,
 };

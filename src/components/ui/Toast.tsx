@@ -208,12 +208,15 @@ const ToastItemComponent = ({
   onHide: (id: string) => void;
 }) => {
   useEffect(() => {
+    // Fix: Ensure duration has a default value and handle undefined case
+    const duration = toast.duration ?? 3000;
+
     const timer = setTimeout(() => {
       onHide(toast.id);
-    }, toast.duration || 3000);
+    }, duration);
 
     return () => clearTimeout(timer);
-  }, [toast, onHide]);
+  }, [toast.id, toast.duration, onHide]); // Fixed: Added toast.duration to dependencies
 
   return (
     <ToastItem
