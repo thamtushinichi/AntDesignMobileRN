@@ -14,6 +14,10 @@
       "sha1": "d01b4a9a01dfdb6d9a5c6ec153d528d70706d885"
     },
     {
+      "path": "src/assets/fonts/Inter_18pt-ExtraLight.ttf",
+      "sha1": "42e4cb6caa0b9fb529bf640645a9bc29284d79b2"
+    },
+    {
       "path": "src/assets/fonts/Inter_18pt-Light.ttf",
       "sha1": "6b041e6fc61656b930d8ef638a0b9d6a0ac8e084"
     },
@@ -28,6 +32,10 @@
     {
       "path": "src/assets/fonts/Inter_18pt-SemiBold.ttf",
       "sha1": "f3e44abd6661d5b861e66db22f4f79a6c466cd00"
+    },
+    {
+      "path": "src/assets/fonts/Inter_18pt-Thin.ttf",
+      "sha1": "4f2b3c3c97e618166627b4d3fff9322fa5198e81"
     }
   ]
 }

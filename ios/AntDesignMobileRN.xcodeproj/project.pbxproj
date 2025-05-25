@@ -14,6 +14,8 @@
 		2BBA4BF1D91E417DBD968E02 /* Inter_18pt-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D667645741B2455EBA19C3C8 /* Inter_18pt-ExtraBold.ttf */; };
 		40F954CE41CE4187A2735112 /* Inter_18pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEF6E1845947D5BB3C4B98 /* Inter_18pt-Black.ttf */; };
 		4576D371D8884EC89B6A9FC6 /* Inter_18pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8A9E49F8E4E411CAC789320 /* Inter_18pt-Medium.ttf */; };
+		6061C69D3FF44EAC8A3F1149 /* Inter_18pt-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC0CAE8D5025415284E31EA1 /* Inter_18pt-Thin.ttf */; };
+		646B85892D3F4D7486E55B3F /* Inter_18pt-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 436D2A5184AE4824A5FE2EEC /* Inter_18pt-ExtraLight.ttf */; };
 		675C5966C27840C585F6BC67 /* Inter_18pt-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8821473794446E68FC2BE91 /* Inter_18pt-Light.ttf */; };
 		74B08B1518CB4BBBAFB675C1 /* Inter_18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D331EBCC04EB42C3B8D07CEB /* Inter_18pt-Bold.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
@@ -28,6 +30,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AntDesignMobileRN/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = AntDesignMobileRN/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-AntDesignMobileRN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AntDesignMobileRN.debug.xcconfig"; path = "Target Support Files/Pods-AntDesignMobileRN/Pods-AntDesignMobileRN.debug.xcconfig"; sourceTree = "<group>"; };
+		436D2A5184AE4824A5FE2EEC /* Inter_18pt-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter_18pt-ExtraLight.ttf"; path = "../src/assets/fonts/Inter_18pt-ExtraLight.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-AntDesignMobileRN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AntDesignMobileRN.release.xcconfig"; path = "Target Support Files/Pods-AntDesignMobileRN/Pods-AntDesignMobileRN.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-AntDesignMobileRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AntDesignMobileRN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = AntDesignMobileRN/AppDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		C8A9E49F8E4E411CAC789320 /* Inter_18pt-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter_18pt-Medium.ttf"; path = "../src/assets/fonts/Inter_18pt-Medium.ttf"; sourceTree = "<group>"; };
 		D331EBCC04EB42C3B8D07CEB /* Inter_18pt-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter_18pt-Bold.ttf"; path = "../src/assets/fonts/Inter_18pt-Bold.ttf"; sourceTree = "<group>"; };
 		D667645741B2455EBA19C3C8 /* Inter_18pt-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter_18pt-ExtraBold.ttf"; path = "../src/assets/fonts/Inter_18pt-ExtraBold.ttf"; sourceTree = "<group>"; };
+		DC0CAE8D5025415284E31EA1 /* Inter_18pt-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter_18pt-Thin.ttf"; path = "../src/assets/fonts/Inter_18pt-Thin.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -84,6 +88,8 @@
 				C8A9E49F8E4E411CAC789320 /* Inter_18pt-Medium.ttf */,
 				B32E070270334582AAF7E106 /* Inter_18pt-Regular.ttf */,
 				98426712F28E4E14BF8841B4 /* Inter_18pt-SemiBold.ttf */,
+				436D2A5184AE4824A5FE2EEC /* Inter_18pt-ExtraLight.ttf */,
+				DC0CAE8D5025415284E31EA1 /* Inter_18pt-Thin.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -197,6 +203,8 @@
 				4576D371D8884EC89B6A9FC6 /* Inter_18pt-Medium.ttf in Resources */,
 				0A61194195E64DCE86F5C995 /* Inter_18pt-Regular.ttf in Resources */,
 				E4E19ED8EF3A45AE92C1706A /* Inter_18pt-SemiBold.ttf in Resources */,
+				646B85892D3F4D7486E55B3F /* Inter_18pt-ExtraLight.ttf in Resources */,
+				6061C69D3FF44EAC8A3F1149 /* Inter_18pt-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

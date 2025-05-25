@@ -1,6 +1,5 @@
 // src/tamagui.config.ts
 import { createTamagui } from 'tamagui'
-import { createFont } from '@tamagui/font-inter'
 import { shorthands } from '@tamagui/shorthands'
 import { themes, tokens } from '@tamagui/themes'
 import { createAnimations } from '@tamagui/animations-react-native'
@@ -186,9 +185,10 @@ const customTokens = {
   }
 }
 
-// Enhanced font configuration with proper Inter setup
+// Custom Inter font configuration for Tamagui
 const createInterFont = () => ({
   family: {
+    // Map numeric weights to actual font family names
     100: fontFamily.inter.thin,
     200: fontFamily.inter.extraLight,
     300: fontFamily.inter.light,
@@ -216,6 +216,17 @@ const createInterFont = () => ({
     14: 96,  // 9xl
     15: 128, // 10xl
     16: 144, // 11xl
+    // Token-based sizes
+    true: 14, // Default size
+    xs: 11,
+    sm: 12,
+    md: 14,
+    lg: 16,
+    xl: 18,
+    '2xl': 20,
+    '3xl': 24,
+    '4xl': 30,
+    '5xl': 36,
   },
   transform: {
     0: 'none',
@@ -224,15 +235,29 @@ const createInterFont = () => ({
     3: 'capitalize',
   },
   weight: {
+    // Map numeric weights to font weight strings
     1: '100', // thin
     2: '200', // extraLight
     3: '300', // light
-    4: '400', // regular
+    4: '400', // regular (default)
     5: '500', // medium
     6: '600', // semiBold
     7: '700', // bold
     8: '800', // extraBold
     9: '900', // black
+
+    // Also support string-based weights
+    true: '400', // Default weight
+    thin: '100',
+    extraLight: '200',
+    light: '300',
+    normal: '400',
+    regular: '400',
+    medium: '500',
+    semiBold: '600',
+    bold: '700',
+    extraBold: '800',
+    black: '900',
   },
   color: {
     0: 'transparent',
@@ -252,6 +277,13 @@ const createInterFont = () => ({
     2: -0.025, // -0.025em - tighter
     3: 0.05,   // 0.05em - wide
     4: 0.1,    // 0.1em - wider
+
+    // Token-based letter spacing
+    true: 0,
+    tight: -0.025,
+    normal: 0,
+    wide: 0.025,
+    wider: 0.05,
   },
   lineHeight: {
     1: 1,      // none
@@ -260,17 +292,27 @@ const createInterFont = () => ({
     4: 1.5,    // normal
     5: 1.625,  // relaxed
     6: 2,      // loose
+
+    // Token-based line heights
+    true: 1.5, // Default
+    none: 1,
+    tight: 1.25,
+    snug: 1.375,
+    normal: 1.5,
+    relaxed: 1.625,
+    loose: 2,
   },
-  // Map font weights to actual font files for React Native
+
+  // Important: Font face configuration for React Native
   face: interFontFaces,
 })
 
-// Create fonts
+// Create fonts - use Inter for all text types
 const interFont = createInterFont()
 const fonts = {
   heading: interFont,
   body: interFont,
-  mono: interFont, // You can replace with a monospace font if needed
+  mono: interFont, // You can create a separate mono font config if needed
 }
 
 // Enhanced themes with proper color system

@@ -1,113 +1,285 @@
 // src/components/FontTest.tsx
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { YStack, Text as TamaguiText } from 'tamagui';
-import { getFontFamily, fontFamily } from '../config/fonts';
+import { YStack, XStack, Text, H1, H2, H3, H4, Paragraph, Separator, styled } from 'tamagui';
+import { fontFamily, typographyPresets, getTypographyPreset } from '../config/fonts';
+
+// Create a styled text component for testing different weights
+const TestText = styled(Text, {
+  variants: {
+    weight: {
+      100: { fontFamily: fontFamily.inter.thin },
+      200: { fontFamily: fontFamily.inter.extraLight },
+      300: { fontFamily: fontFamily.inter.light },
+      400: { fontFamily: fontFamily.inter.regular },
+      500: { fontFamily: fontFamily.inter.medium },
+      600: { fontFamily: fontFamily.inter.semiBold },
+      700: { fontFamily: fontFamily.inter.bold },
+      800: { fontFamily: fontFamily.inter.extraBold },
+      900: { fontFamily: fontFamily.inter.black },
+    },
+    size: {
+      sm: { fontSize: '$sm' },
+      md: { fontSize: '$md' },
+      lg: { fontSize: '$lg' },
+      xl: { fontSize: '$xl' },
+    }
+  },
+  defaultVariants: {
+    weight: 400,
+    size: 'md'
+  }
+});
 
 const FontTest = () => {
   return (
-    <YStack padding="$md" space="$md">
-      {/* Test với React Native Text */}
-      <YStack space="$sm">
-        <TamaguiText fontSize="$lg" fontWeight="bold">React Native Text Tests:</TamaguiText>
-
-        <Text style={[styles.text, { fontFamily: 'Inter-Thin' }]}>
-          Inter Thin (100) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-ExtraLight' }]}>
-          Inter ExtraLight (200) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-Light' }]}>
-          Inter Light (300) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-Regular' }]}>
-          Inter Regular (400) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-Medium' }]}>
-          Inter Medium (500) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-SemiBold' }]}>
-          Inter SemiBold (600) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-Bold' }]}>
-          Inter Bold (700) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-ExtraBold' }]}>
-          Inter ExtraBold (800) - Hello World
-        </Text>
-        <Text style={[styles.text, { fontFamily: 'Inter-Black' }]}>
-          Inter Black (900) - Hello World
+    <YStack padding="$lg" space="$lg">
+      <YStack space="$md">
+        <H1 textAlign="center" color="$primary">Font Integration Test</H1>
+        <Text textAlign="center" color="$textMuted" fontSize="$md">
+          Testing Inter font family integration with Tamagui
         </Text>
       </YStack>
 
-      {/* Test với Tamagui Text */}
-      <YStack space="$sm" marginTop="$lg">
-        <TamaguiText fontSize="$lg" fontWeight="bold">Tamagui Text Tests:</TamaguiText>
+      <Separator />
 
-        <TamaguiText fontFamily={fontFamily.inter.thin} fontSize="$md">
-          Tamagui Inter Thin - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.extraLight} fontSize="$md">
-          Tamagui Inter ExtraLight - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.light} fontSize="$md">
-          Tamagui Inter Light - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.regular} fontSize="$md">
-          Tamagui Inter Regular - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.medium} fontSize="$md">
-          Tamagui Inter Medium - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.semiBold} fontSize="$md">
-          Tamagui Inter SemiBold - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.bold} fontSize="$md">
-          Tamagui Inter Bold - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.extraBold} fontSize="$md">
-          Tamagui Inter ExtraBold - Hello World
-        </TamaguiText>
-        <TamaguiText fontFamily={fontFamily.inter.black} fontSize="$md">
-          Tamagui Inter Black - Hello World
-        </TamaguiText>
+      {/* Typography Presets Test */}
+      <YStack space="$md">
+        <H2 color="$color">Typography Presets</H2>
+
+        <YStack space="$sm">
+          <Text {...getTypographyPreset('display')}>
+            Display Text - Large Headers
+          </Text>
+          <Text {...getTypographyPreset('title')}>
+            Title Text - Page Titles
+          </Text>
+          <Text {...getTypographyPreset('heading')}>
+            Heading Text - Section Headers
+          </Text>
+          <Text {...getTypographyPreset('subheading')}>
+            Subheading Text - Subsections
+          </Text>
+          <Text {...getTypographyPreset('body')}>
+            Body Text - Regular content text that flows naturally
+          </Text>
+          <Text {...getTypographyPreset('bodySmall')}>
+            Small Body Text - Secondary information
+          </Text>
+          <Text {...getTypographyPreset('caption')}>
+            Caption Text - Image captions and fine print
+          </Text>
+          <Text {...getTypographyPreset('button')}>
+            Button Text - ACTION BUTTONS
+          </Text>
+          <Text {...getTypographyPreset('label')}>
+            Label Text - Form Labels
+          </Text>
+        </YStack>
       </YStack>
 
-      {/* Test Tamagui font weights */}
-      <YStack space="$sm" marginTop="$lg">
-        <TamaguiText fontSize="$lg" fontWeight="bold">Tamagui Font Weights:</TamaguiText>
+      <Separator />
 
-        <TamaguiText fontWeight="1" fontSize="$md">Weight 1 (Thin) - Hello World</TamaguiText>
-        <TamaguiText fontWeight="2" fontSize="$md">Weight 2 (Regular) - Hello World</TamaguiText>
-        <TamaguiText fontWeight="3" fontSize="$md">Weight 3 (Medium) - Hello World</TamaguiText>
-        <TamaguiText fontWeight="4" fontSize="$md">Weight 4 (SemiBold) - Hello World</TamaguiText>
-        <TamaguiText fontWeight="5" fontSize="$md">Weight 5 (Bold) - Hello World</TamaguiText>
-        <TamaguiText fontWeight="6" fontSize="$md">Weight 6 (ExtraBold) - Hello World</TamaguiText>
-        <TamaguiText fontWeight="7" fontSize="$md">Weight 7 (Black) - Hello World</TamaguiText>
+      {/* Font Weight Tests */}
+      <YStack space="$md">
+        <H2 color="$color">Font Weight Tests</H2>
+
+        <YStack space="$sm">
+          <TestText weight={100} size="md">
+            Inter Thin (100) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={200} size="md">
+            Inter ExtraLight (200) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={300} size="md">
+            Inter Light (300) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={400} size="md">
+            Inter Regular (400) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={500} size="md">
+            Inter Medium (500) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={600} size="md">
+            Inter SemiBold (600) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={700} size="md">
+            Inter Bold (700) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={800} size="md">
+            Inter ExtraBold (800) - The quick brown fox jumps
+          </TestText>
+          <TestText weight={900} size="md">
+            Inter Black (900) - The quick brown fox jumps
+          </TestText>
+        </YStack>
       </YStack>
 
-      {/* Test default Tamagui typography */}
-      <YStack space="$sm" marginTop="$lg">
-        <TamaguiText fontSize="$lg" fontWeight="bold">Default Tamagui Typography:</TamaguiText>
+      <Separator />
 
-        <TamaguiText fontSize={1}>Font Size 1 (12px)</TamaguiText>
-        <TamaguiText fontSize={2}>Font Size 2 (14px)</TamaguiText>
-        <TamaguiText fontSize={3}>Font Size 3 (15px)</TamaguiText>
-        <TamaguiText fontSize={4}>Font Size 4 (16px)</TamaguiText>
-        <TamaguiText fontSize={5}>Font Size 5 (18px)</TamaguiText>
-        <TamaguiText fontSize={6}>Font Size 6 (20px)</TamaguiText>
-        <TamaguiText fontSize={7}>Font Size 7 (24px)</TamaguiText>
+      {/* Tamagui Typography System */}
+      <YStack space="$md">
+        <H2 color="$color">Tamagui Typography System</H2>
+
+        <YStack space="$sm">
+          <H1>H1 - Main Heading</H1>
+          <H2>H2 - Section Heading</H2>
+          <H3>H3 - Subsection Heading</H3>
+          <H4>H4 - Minor Heading</H4>
+          <Paragraph>
+            Paragraph - This is regular paragraph text that demonstrates
+            the default body text styling in Tamagui. It should use the
+            Inter Regular font and have proper line height and spacing.
+          </Paragraph>
+        </YStack>
+      </YStack>
+
+      <Separator />
+
+      {/* Font Size Scale */}
+      <YStack space="$md">
+        <H2 color="$color">Font Size Scale</H2>
+
+        <YStack space="$sm">
+          <Text fontSize={1} fontFamily={fontFamily.inter.regular}>
+            Size 1 (11px) - Extra small text
+          </Text>
+          <Text fontSize={2} fontFamily={fontFamily.inter.regular}>
+            Size 2 (12px) - Small text
+          </Text>
+          <Text fontSize={3} fontFamily={fontFamily.inter.regular}>
+            Size 3 (13px) - Small medium text
+          </Text>
+          <Text fontSize={4} fontFamily={fontFamily.inter.regular}>
+            Size 4 (14px) - Base text size
+          </Text>
+          <Text fontSize={5} fontFamily={fontFamily.inter.regular}>
+            Size 5 (16px) - Large text
+          </Text>
+          <Text fontSize={6} fontFamily={fontFamily.inter.regular}>
+            Size 6 (18px) - Extra large text
+          </Text>
+          <Text fontSize={7} fontFamily={fontFamily.inter.regular}>
+            Size 7 (20px) - XX large text
+          </Text>
+          <Text fontSize={8} fontFamily={fontFamily.inter.regular}>
+            Size 8 (24px) - XXX large text
+          </Text>
+        </YStack>
+      </YStack>
+
+      <Separator />
+
+      {/* Token-based Sizes */}
+      <YStack space="$md">
+        <H2 color="$color">Token-based Font Sizes</H2>
+
+        <YStack space="$sm">
+          <Text fontSize="$xs" fontFamily={fontFamily.inter.regular}>
+            $xs - Extra Small (11px)
+          </Text>
+          <Text fontSize="$sm" fontFamily={fontFamily.inter.regular}>
+            $sm - Small (12px)
+          </Text>
+          <Text fontSize="$md" fontFamily={fontFamily.inter.regular}>
+            $md - Medium (14px)
+          </Text>
+          <Text fontSize="$lg" fontFamily={fontFamily.inter.regular}>
+            $lg - Large (16px)
+          </Text>
+          <Text fontSize="$xl" fontFamily={fontFamily.inter.regular}>
+            $xl - Extra Large (18px)
+          </Text>
+          <Text fontSize="$2xl" fontFamily={fontFamily.inter.regular}>
+            $2xl - 2X Large (20px)
+          </Text>
+          <Text fontSize="$3xl" fontFamily={fontFamily.inter.regular}>
+            $3xl - 3X Large (24px)
+          </Text>
+        </YStack>
+      </YStack>
+
+      <Separator />
+
+      {/* Mixed Styling Tests */}
+      <YStack space="$md">
+        <H2 color="$color">Mixed Styling Tests</H2>
+
+        <YStack space="$sm">
+          <XStack space="$md" alignItems="center">
+            <Text
+              fontFamily={fontFamily.inter.bold}
+              fontSize="$lg"
+              color="$primary"
+            >
+              Bold Primary
+            </Text>
+            <Text
+              fontFamily={fontFamily.inter.medium}
+              fontSize="$md"
+              color="$success"
+            >
+              Medium Success
+            </Text>
+            <Text
+              fontFamily={fontFamily.inter.light}
+              fontSize="$sm"
+              color="$warning"
+            >
+              Light Warning
+            </Text>
+          </XStack>
+
+          <Text
+            fontFamily={fontFamily.inter.semiBold}
+            fontSize="$lg"
+            color="$error"
+            textAlign="center"
+          >
+            SemiBold Error Center Aligned
+          </Text>
+
+          <Text
+            fontFamily={fontFamily.inter.thin}
+            fontSize="$xl"
+            color="$textMuted"
+            textAlign="right"
+          >
+            Thin Muted Right Aligned
+          </Text>
+        </YStack>
+      </YStack>
+
+      <Separator />
+
+      {/* Font Loading Status */}
+      <YStack space="$md">
+        <H2 color="$color">Font Loading Status</H2>
+
+        <YStack space="$sm" padding="$md" backgroundColor="$secondary" borderRadius="$md">
+          <Text fontWeight="bold" color="$color">
+            Expected Font Files:
+          </Text>
+
+          {Object.entries(fontFamily.inter).map(([weight, fontName]) => (
+            <XStack key={weight} justifyContent="space-between" alignItems="center">
+              <Text fontSize="$sm" color="$textMuted">
+                {weight}:
+              </Text>
+              <Text fontSize="$sm" fontFamily={fontName} color="$color">
+                {fontName}
+              </Text>
+            </XStack>
+          ))}
+        </YStack>
+
+        <YStack padding="$md" backgroundColor="$card" borderRadius="$md" borderWidth={1} borderColor="$borderColor">
+          <Text fontSize="$sm" color="$info" textAlign="center">
+            ℹ️ If fonts appear as system default, check font linking in iOS/Android
+          </Text>
+        </YStack>
       </YStack>
     </YStack>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    marginBottom: 8,
-    color: '#121638',
-  },
-});
 
 export default FontTest;
