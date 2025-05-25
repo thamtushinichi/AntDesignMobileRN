@@ -3,6 +3,7 @@ import { createTamagui } from 'tamagui'
 import { shorthands } from '@tamagui/shorthands'
 import { themes, tokens } from '@tamagui/themes'
 import { createAnimations } from '@tamagui/animations-react-native'
+import { fontFamily } from './config/fonts'
 
 // Define our custom colors
 const primaryColor = "#0CB5EB"
@@ -85,7 +86,7 @@ const customTokens = {
 
 // Create Inter font configuration
 const createInterFont = () => ({
-  family: 'Inter_18pt',
+  family: fontFamily.inter.regular, // Sử dụng font regular làm default
   size: {
     1: 12,
     2: 14,
@@ -130,15 +131,15 @@ const createInterFont = () => ({
     2: 1.4,
     3: 1.6,
   },
-  // Map font weights to actual font files
+  // Map font weights to actual font files từ config
   face: {
-    300: { normal: 'Inter_18pt-Light' },
-    400: { normal: 'Inter_18pt-Regular' },
-    500: { normal: 'Inter_18pt-Medium' },
-    600: { normal: 'Inter_18pt-SemiBold' },
-    700: { normal: 'Inter_18pt-Bold' },
-    800: { normal: 'Inter_18pt-ExtraBold' },
-    900: { normal: 'Inter_18pt-Black' },
+    300: { normal: fontFamily.inter.light },
+    400: { normal: fontFamily.inter.regular },
+    500: { normal: fontFamily.inter.medium },
+    600: { normal: fontFamily.inter.semiBold },
+    700: { normal: fontFamily.inter.bold },
+    800: { normal: fontFamily.inter.extraBold },
+    900: { normal: fontFamily.inter.black },
   },
 })
 

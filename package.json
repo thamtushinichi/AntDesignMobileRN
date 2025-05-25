@@ -8,7 +8,10 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "ios:pod-clean": "cd ios && rm -rf Pods && rm -rf build && bundle exec pod install && cd ..",
+    "setup-fonts": "chmod +x scripts/setup-fonts.sh && ./scripts/setup-fonts.sh",
+    "link-fonts": "npx react-native link",
+    "clean:install": "rm -rf node_modules && rm -rf ios/Pods && rm -rf ios/build && rm -rf android/build && pnpm install && cd ios && bundle exec pod install && cd ..",
+    "ios:clean": "cd ios && rm -rf Pods && rm -rf build && bundle exec pod install && cd ..",
     "android:clean": "cd android && ./gradlew clean && cd .."
   },
   "dependencies": {
